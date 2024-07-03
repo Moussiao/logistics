@@ -1,0 +1,104 @@
+########################################
+#                                      #
+#  Локальное окружение для разработки  #
+#                                      #
+########################################
+
+services:
+  db:
+    image: "mariadb:11"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+    
+    restart: unless-stopped
+    volumes:
+      - dev-db-data:/var/lib/mysql
+    networks:
+      - webnet
+      - mariadbnet
+    environment:
+      - MARIADB_ROOT_PASSWORD=password
+      - MARIADB_DATABASE=logistic
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=password
+
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - 6379:6379
+
+    restart: unless-stopped
+    networks:
+        - redisnet
+
+  web:
+    build:
+      target: "development_build"
+      context: .
+    command: python -Wd src/manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    
+    restart: unless-stopped
+    volumes:
+      - ./src:/code/src
+    depends_on:
+      - db
+      - redis
+    networks:
+      - webnet
+      - redisnet
+      - mariadbnet
+    env_file:
+      - ./src/core/.env
+    environment:
+      DJANGO_DATABASE_HOST: db
+
+  bot:
+    build:
+      target: "development_build"
+      context: .
+    command: python -Wd src/manage.py start_chat_bot
+
+    depends_on:
+      - db
+      - redis
+    networks:
+      - redisnet
+      - mariadbnet
+    env_file:
+      - ./src/core/.env
+    environment:
+      DJANGO_DATABASE_HOST: db
+
+  celery:
+    build:
+      target: "development_build"
+      context: .
+    command: celery --workdir=src -A core.celery worker --beat -l INFO
+
+    depends_on:
+      - db
+      - redis
+    networks:
+      - redisnet
+      - mariadbnet
+    env_file:
+      - ./src/core/.env
+    environment:
+      DJANGO_DATABASE_HOST: db
+
+networks:
+  # Network for your internals, use it by default:
+  webnet:
+  # Network for redis, user it for services that need access to the redis:
+  redisnet:
+  # Network for mariadb, use it for services that need access to the db:
+  mariadbnet:
+
+volumes:
+  dev-db-data:
+
