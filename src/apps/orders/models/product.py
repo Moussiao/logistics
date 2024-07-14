@@ -9,7 +9,7 @@ from core.models import TimedMixin
 
 @final
 class Product(TimedMixin, models.Model):
-    name = models.CharField(_("Наименование"), max_length=150)
+    name = models.CharField(_("Наименование"), max_length=150, unique=True)
     price = models.DecimalField(_("Стоимость"), max_digits=10, decimal_places=2)
 
     class Meta(TypedModelMeta):

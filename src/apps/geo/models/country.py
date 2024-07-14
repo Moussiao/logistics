@@ -9,7 +9,7 @@ from core.models import TimedMixin
 
 @final
 class Country(TimedMixin, models.Model):
-    code = models.CharField(_("Код"), max_length=4, unique=True)
+    code = models.CharField(_("Код"), help_text="alpha_2", max_length=4, unique=True)
     name = models.CharField(_("Наименование"), max_length=200)
 
     class Meta(TypedModelMeta):

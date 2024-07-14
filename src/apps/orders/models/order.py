@@ -16,6 +16,10 @@ class Order(TimedMixin, models.Model):
         RETURN = "return", _("Возврат")
 
     external_id = models.PositiveIntegerField(_("Внешний ID"), db_index=True)
+    external_verbose = models.CharField(
+        _("Внешнее наименование"), max_length=150, blank=True
+    )
+
     status = models.CharField(
         _("Статус"), max_length=16, default=Status.NEW, choices=Status.choices
     )
@@ -26,6 +30,7 @@ class Order(TimedMixin, models.Model):
     expected_delivery_date = models.DateField(
         _("Ожидаемая дата доставки"), db_index=True
     )
+    comment = models.CharField(_("Комментарий"), max_length=255, blank=True)
 
     customer = models.ForeignKey(
         to="orders.Customer",
@@ -33,9 +38,16 @@ class Order(TimedMixin, models.Model):
         on_delete=models.PROTECT,
         related_name="orders",
     )
+    customer_address = models.ForeignKey(
+        to="orders.CustomerAddress",
+        verbose_name=_("Адрес заказчика"),
+        on_delete=models.PROTECT,
+        related_name="orders",
+    )
     products = models.ManyToManyField(
         to="orders.Product", verbose_name=_("Продукты"), related_name="orders"
     )
+    total_price = models.DecimalField(_("Стоимость"), max_digits=10, decimal_places=2)
 
     partner = models.ForeignKey(
         to="orders.Partner",

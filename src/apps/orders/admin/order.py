@@ -10,10 +10,13 @@ from apps.orders.models import Order
 class OrderAdmin(admin.ModelAdmin[Order]):
     fields = (
         "external_id",
+        "external_verbose",
         "status",
         "delivery_date",
         "expected_delivery_date",
         "customer",
+        "customer_address",
         "products",
         "partner",
+        "comment",
     )

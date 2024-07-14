@@ -1,4 +1,4 @@
-from typing import final
+from typing import Any, final
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -9,7 +9,7 @@ from core.models import TimedMixin
 
 @final
 class Partner(TimedMixin, models.Model):
-    name = models.CharField(_("Наименование"), max_length=150)
+    name = models.CharField(_("Наименование"), max_length=150, unique=True)
     is_active = models.BooleanField(
         _("Активен"), help_text=_("Является ли активным партнером"), default=True
     )
@@ -42,3 +42,7 @@ class Partner(TimedMixin, models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        self.name = self.name.lower()
+        super().save(*args, **kwargs)

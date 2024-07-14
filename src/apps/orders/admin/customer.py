@@ -8,4 +8,4 @@ from apps.orders.models import Customer
 @final
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin[Customer]):
-    fields = ("phone",)
+    fields = ("name", "email", "phone", "gender")
