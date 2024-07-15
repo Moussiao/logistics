@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: build
+        uses: ./.github/actions/build
+
+      - name: check django migrations
+        run: poetry run python src/manage.py makemigrations --check --no-input --dry-run
+
+      - name: check code formatting by black
+        run: poetry run black . --check
+
+      - name: lint code by ruff
+        run: poetry run ruff check .
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:11
+        env:
+          MARIADB_ROOT_PASSWORD: password
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 3306:3306
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: build
+        uses: ./.github/actions/build
+
+      - name: test
+        env:
+          REDIS_URL: redis://127.0.0.1:6379
+          DATABASE_URL: mysql2://root:password@127.0.0.1:3306/logistic
+        run: poetry run pytest .
