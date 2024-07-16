@@ -11,6 +11,7 @@ class OrderAdmin(admin.ModelAdmin[Order]):
     fields = (
         "external_id",
         "status",
+        "delivery_date",
         "expected_delivery_date",
         "customer",
         "products",

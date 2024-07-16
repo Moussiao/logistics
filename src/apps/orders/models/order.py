@@ -19,6 +19,10 @@ class Order(TimedMixin, models.Model):
     status = models.CharField(
         _("Статус"), max_length=16, default=Status.NEW, choices=Status.choices
     )
+
+    delivery_date = models.DateField(
+        _("Дата доставки"), db_index=True, null=True, blank=True
+    )
     expected_delivery_date = models.DateField(
         _("Ожидаемая дата доставки"), db_index=True
     )
