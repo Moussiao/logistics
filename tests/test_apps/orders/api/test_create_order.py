@@ -20,13 +20,13 @@ pytestmark = [pytest.mark.django_db]
 
 
 def test_create_order(
-    client: "Client",
     partner: "Partner",
+    admin_client: "Client",
     order_input_factory: "OrderInputFactory",
 ) -> None:
     create_order_data = order_input_factory.build(partner=partner.name).dict()
 
-    response = client.post(
+    response = admin_client.post(
         reverse("api:create_order"),
         data=create_order_data,
         content_type="application/json",
@@ -37,8 +37,8 @@ def test_create_order(
 
 
 def test_invalid_phone_create_order(
-    client: "Client",
     partner: "Partner",
+    admin_client: "Client",
     order_input_factory: "OrderInputFactory",
     customer_input_factory: "CustomerInputFactory",
 ) -> None:
@@ -49,7 +49,7 @@ def test_invalid_phone_create_order(
         partner=partner.name, customer=customer_input, factory_use_construct=True
     ).dict()
 
-    response = client.post(
+    response = admin_client.post(
         reverse("api:create_order"),
         data=create_order_data,
         content_type="application/json",
@@ -57,3 +57,8 @@ def test_invalid_phone_create_order(
 
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
     assert Order.objects.filter(partner=partner).count() == 0
+
+
+def test_not_auth_create_order(client: "Client") -> None:
+    response = client.post(reverse("api:create_order"))
+    assert response.status_code == HTTPStatus.UNAUTHORIZED

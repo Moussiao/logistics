@@ -24,3 +24,13 @@ class CustomerAddressInput(ModelSchema):
             raise ValueError(", ".join(exc.messages)) from exc
 
         return value
+
+
+class CustomerAddressOutput(ModelSchema):
+    country_name: str = Field(alias="country.name")
+    region_name: str = Field(alias="region.name")
+    city_name: str = Field(alias="city.name")
+
+    class Meta:
+        model = CustomerAddress
+        fields = ("id", "postcode", "street", "house_number", "flat_number", "comment")

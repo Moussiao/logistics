@@ -87,3 +87,7 @@ class InvalidCountryCodeOrderError(CreateOrderError):
         field: str = BASE_FIELD,
     ) -> None:
         super().__init__(msg=msg, error_type=error_type, field=field)
+
+
+class OrderNotFoundError(Exception):
+    pass

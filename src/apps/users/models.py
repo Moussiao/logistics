@@ -8,8 +8,8 @@ from django.utils.translation import gettext_lazy as _
 @final
 class User(AbstractUser):
     class Role(models.TextChoices):
-        COURIER = "courier", _("Курьер")
         LOGISTICIAN = "logistician", _("Логист")
+        DELIVERY_PARTNER = "partner", _("Партнер")
 
     role = models.CharField(_("Роль"), max_length=16, choices=Role.choices, blank=True)
 

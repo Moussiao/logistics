@@ -10,5 +10,7 @@ pytest_plugins = [
     "plugins.apps.geo",
     "plugins.apps.orders",
     "plugins.apps.tg_bots",
+    "plugins.apps.users",
+    "plugins.core.api",
     "plugins.django_settings",
 ]

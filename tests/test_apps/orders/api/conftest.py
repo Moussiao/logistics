@@ -47,5 +47,5 @@ class OrderInputFactory(ModelFactory[OrderInput]):
 
 
 customer_input_factory = register_fixture(CustomerInputFactory)
-customer_address_factory = register_fixture(CustomerAddressInputFactory)
+customer_address_input_factory = register_fixture(CustomerAddressInputFactory)
 order_input_factory = register_fixture(OrderInputFactory)

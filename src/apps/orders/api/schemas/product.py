@@ -17,3 +17,9 @@ class ProductInput(ModelSchema):
     class Meta:
         model = Product
         fields = ("name",)
+
+
+class ProductOutput(ModelSchema):
+    class Meta:
+        model = Product
+        fields = ("id", "name", "price")

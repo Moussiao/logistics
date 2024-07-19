@@ -39,3 +39,9 @@ class CustomerInput(ModelSchema):
             raise ValueError(", ".join(exc.messages)) from exc
 
         return value
+
+
+class CustomerOutput(ModelSchema):
+    class Meta:
+        model = Customer
+        fields = ("id", "name", "email", "phone", "gender")
