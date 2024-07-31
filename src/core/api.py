@@ -1,8 +1,18 @@
+from django.conf import settings
 from ninja import NinjaAPI
-from ninja.security import django_auth
 
-from apps.orders.api import router as orders_router
+from apps.delivery.api import router as delivery_router
+from apps.security.api import router as security_router
+from apps.security.auth import AccessTokenAuth
 
-api = NinjaAPI(auth=django_auth, title="Logistic API", urls_namespace="api")
+api_auth = (AccessTokenAuth(),)
+if settings.DEBUG:
+    from ninja.security import django_auth
 
-api.add_router("/", orders_router)
+    api_auth = (django_auth, *api_auth)
+
+
+api = NinjaAPI(auth=api_auth, title="Logistic API", urls_namespace="api")
+
+api.add_router("/auth", security_router)
+api.add_router("/delivery", delivery_router)

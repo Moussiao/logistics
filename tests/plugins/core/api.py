@@ -2,9 +2,17 @@ from typing import TYPE_CHECKING
 
 import pytest
 from django.test import Client
+from ninja.security import django_auth
+
+from core.api import api
 
 if TYPE_CHECKING:
     from apps.users.models import User
+
+
+@pytest.fixture(autouse=True)
+def _global_api_auth() -> None:
+    api.auth = [django_auth]
 
 
 @pytest.fixture()

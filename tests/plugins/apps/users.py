@@ -14,6 +14,8 @@ class UserFactory(Protocol):
 @pytest.fixture()
 def user_factory(fakery: Factory[User]) -> UserFactory:
     def factory(**fields: Any) -> User:
+        fields.setdefault("is_active", True)
+        fields.setdefault("is_superuser", False)
         return fakery.make(model=User, fields=fields)  # type: ignore[call-overload]
 
     return factory

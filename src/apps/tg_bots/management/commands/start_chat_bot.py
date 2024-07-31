@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING, Any
 
+from django.conf import settings
 from django.core.management import BaseCommand
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
-
-from core.settings.environ import env
 
 if TYPE_CHECKING:
     from telegram import Update
@@ -15,16 +14,12 @@ class Command(BaseCommand):
 
     help = __doc__
 
-    BOT_TOKEN = env("BOT_TOKEN", cast=str)
-
     def handle(self, **options: Any) -> None:
-        application = ApplicationBuilder().token(self.BOT_TOKEN).build()
+        application = ApplicationBuilder().token(settings.BOT_TOKEN).build()
 
         application.add_handler(CommandHandler("help", self.help_command))
         application.add_handler(CommandHandler("start", self.start_command))
-        application.add_handler(
-            MessageHandler(filters.TEXT & ~filters.COMMAND, self.echo)
-        )
+        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.echo))
 
         application.run_polling()
 

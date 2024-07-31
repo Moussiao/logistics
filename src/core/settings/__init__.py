@@ -25,6 +25,7 @@ _settings_modules_paths: tuple[str, ...] = (
     "installed_apps.py",
     "middleware.py",
     "static.py",
+    "telegram.py",
     # Переопределение дефолтных настроек
     optional("local.py"),
 )

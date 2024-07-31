@@ -1,3 +1,8 @@
+from datetime import timedelta
+
+from core.settings.environ import env
+
+
 AUTH_USER_MODEL = "users.User"
 
 # Password validation
@@ -24,6 +29,11 @@ AUTHENTICATION_BACKENDS = [
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+# JWT
+JWT_ALGORITHM = "HS256"
+JWT_SECRET = env("JWT_SECRET", cast=str)
+ACCESS_TOKEN_EXPIRE_MINUTES = 15
 
 # django-axes
 # https://django-axes.readthedocs.io/

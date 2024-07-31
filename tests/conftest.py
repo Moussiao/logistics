@@ -7,8 +7,8 @@ It may be also used for extending doctest's context:
 """
 
 pytest_plugins = [
+    "plugins.apps.delivery",
     "plugins.apps.geo",
-    "plugins.apps.orders",
     "plugins.apps.tg_bots",
     "plugins.apps.users",
     "plugins.core.api",

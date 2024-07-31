@@ -17,8 +17,9 @@ INSTALLED_APPS: list[str] = [
 
     # Project apps
     "core",
+    "apps.delivery",
     "apps.geo",
-    "apps.orders",
+    "apps.security",
     "apps.tg_bots",
     "apps.users",
 ]

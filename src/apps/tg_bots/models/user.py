@@ -11,13 +11,19 @@ from core.models import TimedMixin
 class TgUser(TimedMixin, models.Model):
     is_bot = models.BooleanField(_("Бот"), help_text=_("Является ли ботом"))
     external_id = models.PositiveBigIntegerField(_("TG ID"), db_index=True, unique=True)
-    username = models.CharField(
-        _("Имя пользователя"), max_length=32, unique=True, blank=True
-    )
+    username = models.CharField(_("Имя пользователя"), max_length=32, unique=True, blank=True)
 
     first_name = models.CharField(_("Имя"), max_length=150)
     last_name = models.CharField(_("Фамилия"), max_length=150, blank=True)
     language_code = models.CharField(_("Язык"), max_length=16, blank=True)
+
+    user = models.OneToOneField(
+        to="users.User",
+        verbose_name=_("Пользователь"),
+        on_delete=models.PROTECT,
+        null=True,
+        related_name="tg_user",
+    )
 
     class Meta(TypedModelMeta):
         verbose_name = _("Пользователь")

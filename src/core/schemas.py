@@ -9,5 +9,5 @@ class ErrorEntity(Schema):
     ctx: dict[str, str] | None = None
 
 
-class ErrorOutput(Schema):
+class ErrorResponse(Schema):
     detail: list[ErrorEntity]

@@ -22,6 +22,4 @@ def mock_send_message(mocker: "MockerFixture") -> "MockType":
 async def test_send_message(tg_chat: "TgChat", mock_send_message: "MockType") -> None:
     await TgSendMessage(text="text", chat=tg_chat)()
 
-    mock_send_message.assert_called_once_with(
-        chat_id=tg_chat.external_id * -1, text="text"
-    )
+    mock_send_message.assert_called_once_with(chat_id=tg_chat.external_id * -1, text="text")

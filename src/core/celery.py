@@ -41,7 +41,7 @@ def setup_periodic_tasks(sender: Celery, **kwargs: Any) -> None:
     Регистрирует задачи, которые выполняются в определенные периоды времени.
     (https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html#entries)
     """
-    from apps.orders.tasks import notify_of_buyout_orders, notify_of_new_orders
+    from apps.delivery.tasks import notify_of_buyout_orders, notify_of_new_orders
 
     sender.add_periodic_task(
         schedule=crontab(hour="*/1", minute="0"),
