@@ -1,14 +1,14 @@
 from typing import final
 
 import attr
-from django.core.paginator import Page, Paginator
 from django.db.models import Q, QuerySet
 from pydantic import TypeAdapter
 
 from apps.delivery.api.schemas import OrderResponse, OrdersFilters, OrdersResponse
 from apps.delivery.models import Order
 from apps.users.models import User
-from core.types import SortDirecition
+from core.paginator import CursorPage, CursorPaginator
+from core.utils import safe_string_to_numbers
 
 _orders_response_adapter = TypeAdapter(list[OrderResponse])
 
@@ -16,34 +16,35 @@ _orders_response_adapter = TypeAdapter(list[OrderResponse])
 @final
 @attr.dataclass(slots=True, frozen=True)
 class GetOrders:
-    COUNT_PER_PAGE = 10
-    DEFAULT_ORDER_BY = "-pk"
+    PAGE_SIZE = 10
 
     _user: User
     _filters: OrdersFilters
 
     def __call__(self) -> OrdersResponse:
         if self._user.is_anonymous or not self._user.role:
-            return OrdersResponse(items=[], page=1, has_next_page=False)
+            return OrdersResponse(items=[], next_cursor=None, previous_cursor=None)
 
         page = self._get_orders_page()
-        orders = _orders_response_adapter.validate_python(page.object_list)
+        orders = _orders_response_adapter.validate_python(page.objects)
         return OrdersResponse(
             items=orders,
-            page=page.number,
-            has_next_page=page.has_next(),
+            next_cursor=page.next_cursor,
+            previous_cursor=page.previous_cursor,
         )
 
-    def _get_orders_page(self) -> Page:
+    def _get_orders_page(self) -> CursorPage:
         orders_qs = self._get_orders_qs()
-        paginator = Paginator(orders_qs, per_page=self.COUNT_PER_PAGE)
-        return paginator.get_page(self._filters.page)
+        paginator = CursorPaginator(orders_qs, page_size=self.PAGE_SIZE)
+        return paginator.get_page(self._filters.cursor)
 
     def _get_orders_qs(self) -> QuerySet[Order, dict]:
         filters_q = Q()
         if self._user.role == User.Role.DELIVERY_PARTNER:
             filters_q &= Q(partner__user=self._user)
 
+        if self._filters.ids is not None:
+            filters_q &= Q(id__in=safe_string_to_numbers(self._filters.ids))
         if self._filters.status is not None:
             filters_q &= Q(status=self._filters.status)
         if self._filters.partner_id is not None:
@@ -57,11 +58,5 @@ class GetOrders:
         if self._filters.expected_delivery_date_end is not None:
             filters_q &= Q(expected_delivery_date__lte=self._filters.expected_delivery_date_end)
 
-        if self._filters.expected_delivery_date_sort is None:
-            order_by = self.DEFAULT_ORDER_BY
-        elif self._filters.expected_delivery_date_sort == SortDirecition.ASK:
-            order_by = "expected_delivery_date"
-        else:
-            order_by = "-expected_delivery_date"
-
-        return Order.objects.filter(filters_q).values(*OrderResponse.Meta.fields).order_by(order_by)
+        fields = ("created_at",) + OrderResponse.Meta.fields
+        return Order.objects.filter(filters_q).values(*fields).order_by("-created_at")

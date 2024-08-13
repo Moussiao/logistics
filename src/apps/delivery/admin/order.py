@@ -17,6 +17,7 @@ class OrderAdmin(admin.ModelAdmin[Order]):
         "customer",
         "customer_address",
         "products",
+        "total_price",
         "partner",
         "comment",
     )

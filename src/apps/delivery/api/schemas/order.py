@@ -10,7 +10,6 @@ from apps.delivery.api.schemas.customer_address import (
 )
 from apps.delivery.api.schemas.product import ProductRequest, ProductResponse
 from apps.delivery.models import Order
-from core.types import SortDirecition
 
 
 class OrderRequest(ModelSchema):
@@ -66,19 +65,17 @@ class CreateOrderResponse(Schema):
 
 class OrdersResponse(Schema):
     items: list[OrderResponse]
-
-    page: int
-    has_next_page: bool
+    next_cursor: str | None = None
+    previous_cursor: str | None = None
 
 
 class OrdersFilters(Schema):
-    page: int = Field(1, gt=0)
+    cursor: str | None = None
 
+    ids: str | None = None
     status: Order.Status | None = None
     partner_id: int | None = None
     delivery_date_start: date | None = None
     delivery_date_end: date | None = None
     expected_delivery_date_start: date | None = None
     expected_delivery_date_end: date | None = None
-
-    expected_delivery_date_sort: SortDirecition | None = None
