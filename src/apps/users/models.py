@@ -10,6 +10,7 @@ class User(AbstractUser):
     class Role(models.TextChoices):
         LOGISTICIAN = "logistician", _("Логист")
         DELIVERY_PARTNER = "partner", _("Партнер")
+        UNKNOWN = "", _("Не указана")
 
     role = models.CharField(_("Роль"), max_length=16, choices=Role.choices, blank=True)
 
