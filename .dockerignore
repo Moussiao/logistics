@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+.env
 develop-eggs/
 dist/
 downloads/
@@ -61,3 +62,6 @@ docker-compose.yml
 # JetBrains
 .idea/
 
+#####=== Custom ===#####
+venv/
+.git

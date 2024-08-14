@@ -18,6 +18,20 @@ from apps.delivery.services.reports.types import ReportType
 if TYPE_CHECKING:
     from .base import OrdersReport, OrdersReportSender
 
+__all__ = (
+    # Отчеты
+    "ReportType",
+    "TrySendReports",
+    "TodayNewOrders",
+    "TomorrowNewOrders",
+    "PreviousDayBuyoutedOrders",
+    "PreviousMonthBuyoutedOrders",
+    "NotAvailableReportError",
+    # Отправители
+    "SenderError",
+    "TelegramSender",
+)
+
 _reports_classes: tuple[type["OrdersReport"], ...] = (
     TodayNewOrders,
     TomorrowNewOrders,
@@ -59,24 +73,12 @@ class TrySendReports:
             except NotAvailableReportError:
                 continue
 
+    def get_reports_count(self) -> int:
+        return len(self._report_classes)
+
     async def _send_report(self, partner: Partner, report: "OrdersReport") -> None:
         report_text = await report.aget_text()
         if not report_text:
             return
 
         await self._sender.send(text=report_text, partner=partner)
-
-
-__all__ = (
-    # Отчеты
-    "ReportType",
-    "TrySendReports",
-    "TodayNewOrders",
-    "TomorrowNewOrders",
-    "PreviousDayBuyoutedOrders",
-    "PreviousMonthBuyoutedOrders",
-    "NotAvailableReportError",
-    # Отправители
-    "SenderError",
-    "TelegramSender",
-)

@@ -8,7 +8,7 @@ from apps.delivery.api.schemas import OrderResponse, OrdersFilters, OrdersRespon
 from apps.delivery.models import Order
 from apps.users.models import User
 from core.paginator import CursorPage, CursorPaginator
-from core.utils import safe_string_to_numbers
+from core.utils import safe_string_to_integers
 
 _orders_response_adapter = TypeAdapter(list[OrderResponse])
 
@@ -44,7 +44,7 @@ class GetOrders:
             filters_q &= Q(partner__user=self._user)
 
         if self._filters.ids is not None:
-            filters_q &= Q(id__in=safe_string_to_numbers(self._filters.ids))
+            filters_q &= Q(id__in=safe_string_to_integers(self._filters.ids))
         if self._filters.status is not None:
             filters_q &= Q(status=self._filters.status)
         if self._filters.partner_id is not None:

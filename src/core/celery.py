@@ -1,14 +1,10 @@
 # https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html#using-celery-with-django
 import os
-import time
 from logging import getLogger
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from celery import Celery
 from celery.schedules import crontab
-
-if TYPE_CHECKING:
-    from celery import Task
 
 log = getLogger(__name__)
 
@@ -53,25 +49,3 @@ def setup_periodic_tasks(sender: Celery, **kwargs: Any) -> None:
         sig=notify_of_buyout_orders.s(),
         name="buyout_orders_notification",
     )
-
-
-@app.task(
-    name="core.celery.debug_task",
-    bind=True,
-    acks_late=True,
-    autoretry_for=(Exception,),
-    retry_backoff=10,
-    retry_backoff_max=24 * 60 * 60,
-    retry_kwargs={"max_retries": 8},
-)
-def debug_task(self: "Task") -> None:
-    """Пример задачи Celery (для отладки)."""
-
-    time.sleep(1.0)
-    log.debug("debug_task, retry %s", self.request.retries)
-    log.debug("Request: %s", self.request)
-    log.debug("Task: %s, props: %s", self, dir(self))
-    max_retries = self.retry_kwargs.get("max_retries", 0)
-    if self.request.retries < max_retries / 2:
-        # Поднимаем исключение
-        log.debug(1 / 0)

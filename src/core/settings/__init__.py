@@ -23,6 +23,7 @@ _settings_modules_paths: tuple[str, ...] = (
     "environ.py",
     "http.py",
     "installed_apps.py",
+    "media.py",
     "middleware.py",
     "static.py",
     "telegram.py",

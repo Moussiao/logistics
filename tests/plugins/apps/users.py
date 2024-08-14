@@ -49,3 +49,8 @@ def logistician_user(user_factory: UserFactory) -> User:
 @pytest.fixture()
 def partner_user(user_factory: UserFactory) -> User:
     return user_factory(role=User.Role.DELIVERY_PARTNER)
+
+
+@pytest.fixture()
+def unknown_user(user_factory: UserFactory) -> User:
+    return user_factory(role=User.Role.UNKNOWN)

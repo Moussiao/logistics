@@ -47,7 +47,7 @@ def get_orders(request: HttpRequest, filters: Query[OrdersFilters]) -> OrdersRes
 
 
 @router.get("/{order_id}", response=DetailOrderResponse)
-def retrieve_order(request: HttpRequest, order_id: int) -> "Order":
+def get_order(request: HttpRequest, order_id: int) -> "Order":
     try:
         order = GetOrder(order_id)()
     except OrderNotFoundError as exc:

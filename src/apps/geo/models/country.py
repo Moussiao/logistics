@@ -9,7 +9,9 @@ from core.models import TimedMixin
 
 @final
 class Country(TimedMixin, models.Model):
-    code = models.CharField(_("Код"), help_text="alpha_2", max_length=4, unique=True)
+    # max_length=16 для ситуации при генирации рандомных стран, дабы уменьшить шанс коллизий.
+    # Для нынешних СУБД, разницы особо нет, ограничиваемым ли мы длину для CharField или нет.
+    code = models.CharField(_("Код"), help_text="alpha_2", max_length=16, unique=True)
     name = models.CharField(_("Наименование"), max_length=200)
 
     class Meta(TypedModelMeta):

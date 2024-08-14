@@ -27,7 +27,7 @@ class PartnersFactory(Protocol):
 
 
 @pytest.fixture()
-def order_factory(fakery: Factory[Partner]) -> OrderFactory:
+def order_factory(fakery: Factory[Order]) -> OrderFactory:
     def factory(**fields: Any) -> Order:
         return fakery.make(model=Order, fields=fields)  # type: ignore[call-overload]
 
@@ -53,6 +53,7 @@ def partner_factory(fakery: Factory[Partner]) -> PartnerFactory:
 @pytest.fixture()
 def partners_factory(fakery: Factory[Partner]) -> PartnersFactory:
     def factory(objs_quantity: int, **fields: Any) -> list[Partner]:
+        fields.setdefault("active", True)
         return fakery.make(model=Order, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload]
 
     return factory
@@ -65,4 +66,9 @@ def order(order_factory: OrderFactory) -> Order:
 
 @pytest.fixture()
 def partner(partner_factory: PartnerFactory) -> Partner:
+    return partner_factory()
+
+
+@pytest.fixture()
+def another_partner(partner_factory: PartnerFactory) -> Partner:
     return partner_factory()

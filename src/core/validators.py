@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from phonenumbers import NumberParseException, PhoneNumber, is_valid_number, parse
 from pycountry import countries
 
+__all__ = ("validate_phone", "validate_country_code")
+
 
 def validate_phone(phone: str) -> None:
     try:
@@ -22,6 +24,3 @@ def validate_country_code(alpha_2: str) -> None:
 
     if country is None:
         raise ValidationError(_("Not valid alpha_2 country code"))
-
-
-__all__ = ("validate_phone",)

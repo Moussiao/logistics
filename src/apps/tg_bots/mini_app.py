@@ -55,7 +55,7 @@ class InitDataValidator:
     def check_hash(self) -> None:
         try:
             expected_hash = self.parsed_raw_init_data[self.DATA_HASH_KEY]
-        except (KeyError, ValueError) as exc:
+        except KeyError as exc:
             raise InvalidFormatInitDataError("raw_init_data is invalid") from exc
 
         hash_by_bot_token = self._get_init_data_hash_by_bot_token()
@@ -76,7 +76,10 @@ class InitDataValidator:
     @property
     def parsed_raw_init_data(self) -> dict[str, str]:
         if self._parsed_init_data is None:
-            self._parsed_init_data = parse_raw_init_data(self._raw_init_data)
+            try:
+                self._parsed_init_data = parse_raw_init_data(self._raw_init_data)
+            except (KeyError, ValueError) as exc:
+                raise InvalidFormatInitDataError("raw_init_data is invalid") from exc
 
         return self._parsed_init_data
 

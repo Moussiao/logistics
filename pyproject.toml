@@ -10,7 +10,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "~3.12"
 # django
-django = "^5.0.7"
+django = "^5.1"
 django-axes = "^6.5.1"
 django-celery-results = "^2.5.1"
 django-environ = "^0.11.2"
@@ -22,11 +22,11 @@ channels = {version = "^4.1.0", extras = ["daphne"]}
 attrs = "^23.2.0"
 celery = "^5.4.0"
 mysqlclient = "^2.2.4"
-phonenumbers = "^8.13.42"
+phonenumbers = "^8.13.43"
 pycountry = "^24.6.1"
 python-telegram-bot = "^21.3"
 redis = "^5.0.8"
-pyjwt = "^2.8.0"
+pyjwt = "^2.9.0"
 
 [tool.poetry.group.dev.dependencies]
 # django
@@ -47,10 +47,10 @@ types-freezegun = "^1.1.10"
 django-fakery = "^4.1.3"
 polyfactory = "^2.16.2"
 # other
-black = "^24.4.2"
+black = "^24.8.0"
 ipython = "^8.26.0"
 pre-commit = "^3.8.0"
-ruff = "^0.5.5"
+ruff = "^0.5.7"
 
 [tool.django-stubs]
 django_settings_module = "core.settings"
@@ -60,7 +60,8 @@ DJANGO_SETTINGS_MODULE = "core.settings"
 addopts = "--cov=. --cov-report=term-missing:skip-covered --cov-report=html --cov-fail-under=0"
 filterwarnings = [
     "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning:pytest_freezegun:17",
-    "ignore:Support for class-based `config` is deprecated, use ConfigDict instead.:DeprecationWarning:pydantic._internal._config:291"
+    "ignore:Converter 'uuid' is already registered.:django.utils.deprecation.RemovedInDjango60Warning:ninja.signature.utils:96",
+    "ignore:Support for class-based `config` is deprecated, use ConfigDict instead.:DeprecationWarning:pydantic._internal._config:291",
 ]
 python_files = "test*.py"
 pythonpath = ". src"
