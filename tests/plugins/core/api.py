@@ -15,14 +15,14 @@ def _global_api_auth() -> None:
     api.auth = [django_auth]
 
 
-@pytest.fixture()
+@pytest.fixture
 def logistician_client(logistician_user: "User") -> Client:
     client = Client()
     client.force_login(user=logistician_user)
     return client
 
 
-@pytest.fixture()
+@pytest.fixture
 def partner_client(partner_user: "User") -> Client:
     client = Client()
     client.force_login(user=partner_user)

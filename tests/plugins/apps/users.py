@@ -16,7 +16,7 @@ class UsersFactory(Protocol):
     def __call__(self, objs_quantity: int, **fields: Any) -> list[User]: ...
 
 
-@pytest.fixture()
+@pytest.fixture
 def user_factory(fakery: Factory[User]) -> UserFactory:
     def factory(**fields: Any) -> User:
         fields.setdefault("is_active", True)
@@ -26,7 +26,7 @@ def user_factory(fakery: Factory[User]) -> UserFactory:
     return factory
 
 
-@pytest.fixture()
+@pytest.fixture
 def users_factory(fakery: Factory[User]) -> UsersFactory:
     def factory(objs_quantity: int, **fields: Any) -> list[User]:
         fields.setdefault("is_active", True)
@@ -36,21 +36,21 @@ def users_factory(fakery: Factory[User]) -> UsersFactory:
     return factory
 
 
-@pytest.fixture()
+@pytest.fixture
 def user(user_factory: UserFactory) -> User:
     return user_factory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def logistician_user(user_factory: UserFactory) -> User:
     return user_factory(role=User.Role.LOGISTICIAN)
 
 
-@pytest.fixture()
+@pytest.fixture
 def partner_user(user_factory: UserFactory) -> User:
     return user_factory(role=User.Role.DELIVERY_PARTNER)
 
 
-@pytest.fixture()
+@pytest.fixture
 def unknown_user(user_factory: UserFactory) -> User:
     return user_factory(role=User.Role.UNKNOWN)

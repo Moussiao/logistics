@@ -18,7 +18,7 @@ class BaseNewOrdersReport(OrdersReport):
 
     def _get_base_ordres_qs(self) -> QuerySet[Order]:
         return (
-            Order.objects.filter(partner=self._partner, status=Order.Status.NEW)
+            Order.objects.filter(partner=self._partner, state=Order.State.NEW)
             .select_related("customer")
             .prefetch_related("products")
             .order_by("id")
@@ -28,7 +28,7 @@ class BaseNewOrdersReport(OrdersReport):
         return "\n".join(self._prepare_order_report(x) for x in orders)
 
     def _prepare_order_report(self, order: Order) -> str:
-        total_price = sum(x.price for x in order.products.all())
+        total_price = sum(x.total_price for x in order.products.all())
 
         return (
             f"ID: {order.external_id}\n"

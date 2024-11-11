@@ -19,12 +19,12 @@ if TYPE_CHECKING:
     from tests.plugins.apps.tg_bots import TgUserFactory
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_init_data_validate(mocker: "MockerFixture") -> "MockType":
     return mocker.patch("apps.tg_bots.mini_app.InitDataValidator.validate", return_value=None)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_create_access_token(
     user: "User",
     tg_user_factory: "TgUserFactory",
@@ -42,7 +42,7 @@ def test_create_access_token(
     mock_init_data_validate.assert_called_once_with(CreateAccessToken.INIT_DATA_PERIOD_OF_VALIDITY)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_user_not_found_error(
     tg_user_factory: "TgUserFactory",
     mock_init_data_validate: "MockType",

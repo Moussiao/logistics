@@ -1,26 +1,37 @@
 from typing import final
 
 import attr
+from django.db.models import Q
 
 from apps.delivery.models import Order
 from apps.delivery.services.orders.exceptions import OrderNotFoundError
+from apps.users.models import User
 
 
 @final
 @attr.dataclass(frozen=True, slots=True)
 class GetOrder:
+    _user: User
     _order_id: int
 
     def __call__(self) -> Order:
+        if self._user.is_anonymous or not self._user.role:
+            raise OrderNotFoundError
+
+        filters_q = Q()
+        if self._user.role == User.Role.DELIVERY_PARTNER:
+            filters_q &= Q(partner__user=self._user)
+
         try:
             order = (
-                Order.objects.select_related(
+                Order.objects.filter(filters_q)
+                .select_related(
                     "customer",
                     "customer_address__country",
                     "customer_address__region",
                     "customer_address__city",
                 )
-                .prefetch_related("products")
+                .prefetch_related("products__product")
                 .get(id=self._order_id)
             )
         except Order.DoesNotExist as exc:

@@ -27,7 +27,7 @@ def test_today_report(
 ) -> None:
     partner = partner_factory(working_time_zone=utc_time_zone)
     yesterday_date = localdate(timezone=UTC) - timedelta(days=1)
-    order_factory(partner=partner, status=Order.Status.NEW, expected_delivery_date=yesterday_date)
+    order_factory(partner=partner, state=Order.State.NEW, expected_delivery_date=yesterday_date)
     today_report = TodayNewOrders(partner=partner)
 
     report_text = today_report.get_text()
@@ -69,7 +69,7 @@ def test_tomorrow_report(
 ) -> None:
     partner = partner_factory(working_time_zone=utc_time_zone)
     tomorrow_date = localdate(timezone=UTC) + timedelta(days=1)
-    order_factory(partner=partner, status=Order.Status.NEW, expected_delivery_date=tomorrow_date)
+    order_factory(partner=partner, state=Order.State.NEW, expected_delivery_date=tomorrow_date)
     tomorrow_report = TomorrowNewOrders(partner=partner)
 
     report_text = tomorrow_report.get_text()

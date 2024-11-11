@@ -3,6 +3,7 @@ from .customer_address import CustomerAddressRequest, CustomerAddressResponse
 from .order import (
     CreateOrderResponse,
     DetailOrderResponse,
+    EditOrderRequest,
     OrderRequest,
     OrderResponse,
     OrdersFilters,
@@ -18,6 +19,7 @@ __all__ = (
     "CustomerAddressResponse",
     "CreateOrderResponse",
     "DetailOrderResponse",
+    "EditOrderRequest",
     "OrderRequest",
     "OrderResponse",
     "OrdersFilters",

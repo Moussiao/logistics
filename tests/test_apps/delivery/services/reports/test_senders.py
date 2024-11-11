@@ -20,12 +20,12 @@ if TYPE_CHECKING:
 pytestmark = [pytest.mark.django_db(transaction=True)]
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_tg_send_message(mocker: "MockerFixture") -> "MockType":
     return mocker.patch("telegram.ext.ExtBot.send_message")
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_telegram_sender(
     tg_chat: "TgChat",
     partner_factory: "PartnerFactory",
@@ -43,7 +43,7 @@ async def test_telegram_sender(
     mock_tg_send_message.assert_called_once_with(chat_id=tg_chat.external_id * -1, text="text")
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_error_telegram_sender(
     partner_factory: "PartnerFactory",
     mock_tg_send_message: "MockType",

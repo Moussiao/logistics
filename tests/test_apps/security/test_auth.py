@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     from apps.users.models import User
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_decode_token(user: "User") -> None:
     token = create_user_access_token(user_id=user.pk)
     expected_payload = decode_user_access_token(token)
@@ -34,7 +34,7 @@ def test_decode_token(user: "User") -> None:
     assert token_payload == expected_payload
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_expired_decode_access_token(
     user: "User",
     freezer: Freezer,

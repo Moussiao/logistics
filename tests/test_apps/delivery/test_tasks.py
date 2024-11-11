@@ -6,7 +6,7 @@ from apps.delivery.tasks import notify_of_buyout_orders, notify_of_new_orders
 pytestmark = [pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_try_send_reports(mocker: MockerFixture) -> MockType:
     return mocker.patch("apps.delivery.services.reports.TrySendReports.send_to_active_partners")
 

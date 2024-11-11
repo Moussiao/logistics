@@ -34,7 +34,7 @@ _valid_raw_init_data = (
 _bot_token_for_valid_data = "test"
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_check_hash(mocker: "MockerFixture") -> "MockType":
     return mocker.patch.object(InitDataValidator, "check_hash", return_value=None)
 

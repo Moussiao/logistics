@@ -71,14 +71,14 @@ def test_filters(
     orders_to_filters = orders_factory(
         GetOrders.PAGE_SIZE,
         partner=partner,
-        status=Order.Status.NEW,
+        state=Order.State.NEW,
         delivery_date=now_date,
         expected_delivery_date=now_date,
     )
     filters = OrdersFilters(
         ids=",".join(str(x.pk) for x in orders_to_filters),
         partner_id=partner.pk,
-        status=Order.Status.NEW,
+        states=str(Order.State.NEW),
         delivery_date_start=now_date,
         delivery_date_end=now_date,
         expected_delivery_date_start=now_date,

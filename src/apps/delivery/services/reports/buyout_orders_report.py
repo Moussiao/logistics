@@ -18,7 +18,7 @@ class BaseBuyoutedOrdersReport(OrdersReport):
 
     def _get_base_orders_qs(self) -> QuerySet[Order]:
         return (
-            Order.objects.filter(partner=self._partner, status=Order.Status.PAID)
+            Order.objects.filter(partner=self._partner, state=Order.State.PAID)
             .prefetch_related("products")
             .order_by()
         )
@@ -27,7 +27,7 @@ class BaseBuyoutedOrdersReport(OrdersReport):
         products_total_price = Decimal()
         for order in orders:
             for product in order.products.all():
-                products_total_price += product.price
+                products_total_price += product.total_price
 
         return products_total_price
 

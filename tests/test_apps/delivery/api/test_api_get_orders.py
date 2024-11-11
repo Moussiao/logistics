@@ -19,12 +19,12 @@ def test_get_orders(
     logistician_client: "Client",
     orders_factory: "OrdersFactory",
 ) -> None:
-    orders_factory(GetOrders.PAGE_SIZE, status=Order.Status.RETURN)
-    new_orders = orders_factory(GetOrders.PAGE_SIZE, status=Order.Status.NEW)
+    orders_factory(GetOrders.PAGE_SIZE, state=Order.State.CANCELED)
+    new_orders = orders_factory(GetOrders.PAGE_SIZE, state=Order.State.NEW)
 
     response = logistician_client.get(
         reverse("api:get_orders"),
-        data={"status": Order.Status.NEW.value},
+        data={"states": Order.State.NEW.value},
     )
 
     response_json = response.json()

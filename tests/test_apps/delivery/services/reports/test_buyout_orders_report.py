@@ -29,7 +29,7 @@ def test_previous_day_report(
     partner = partner_factory(working_time_zone=utc_time_zone)
     previous_date = localdate(timezone=UTC) - timedelta(days=1)
     previous_day_report = PreviousDayBuyoutedOrders(partner=partner)
-    order_factory(partner=partner, status=Order.Status.PAID, delivery_date=previous_date)
+    order_factory(partner=partner, state=Order.State.PAID, delivery_date=previous_date)
 
     report_text = previous_day_report.get_text()
 
@@ -73,7 +73,7 @@ def test_previous_month_report(
     previous_day_report = PreviousMonthBuyoutedOrders(partner=partner)
     order_factory(
         partner=partner,
-        status=Order.Status.PAID,
+        state=Order.State.PAID,
         delivery_date=previous_month_first_date,
     )
 

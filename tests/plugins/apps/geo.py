@@ -16,7 +16,7 @@ class TimeZoneFactory(Protocol):
     def __call__(self, **fields: Any) -> TimeZone: ...
 
 
-@pytest.fixture()
+@pytest.fixture
 def country_factory(fakery: Factory[Country]) -> CountryFactory:
     def factory(**fields: Any) -> Country:
         return fakery.make(model=Country, fields=fields)  # type: ignore[call-overload]
@@ -24,7 +24,7 @@ def country_factory(fakery: Factory[Country]) -> CountryFactory:
     return factory
 
 
-@pytest.fixture()
+@pytest.fixture
 def time_zone_factory(fakery: Factory[TimeZone]) -> TimeZoneFactory:
     def factory(**fields: Any) -> TimeZone:
         return fakery.make(model=TimeZone, fields=fields)  # type: ignore[call-overload]
@@ -32,11 +32,11 @@ def time_zone_factory(fakery: Factory[TimeZone]) -> TimeZoneFactory:
     return factory
 
 
-@pytest.fixture()
+@pytest.fixture
 def russia_country(country_factory: CountryFactory) -> Country:
     return country_factory(name="Russia", code="RU")
 
 
-@pytest.fixture()
+@pytest.fixture
 def utc_time_zone(time_zone_factory: TimeZoneFactory) -> TimeZone:
     return time_zone_factory(name="UTC", minutes_offset_from_utc=0, is_canonical=True)

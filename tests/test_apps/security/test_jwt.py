@@ -41,7 +41,7 @@ def test_create_access_token() -> None:
     assert list(token_payload.keys()) == list(payload_data.keys()) + ["exp"]
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2022-07-01 14:00")
 def test_create_user_access_token(user: "User", settings: "LazySettings") -> None:
     expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)

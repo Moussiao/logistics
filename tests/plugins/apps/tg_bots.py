@@ -17,7 +17,7 @@ class TgUserFactory(Protocol):
     def __call__(self, **fields: Any) -> TgUser: ...
 
 
-@pytest.fixture()
+@pytest.fixture
 def tg_chat_factory(faker: Faker, fakery: Factory[TgChat]) -> TgChatFactory:
     def factory(**fields: Any) -> TgChat:
         # django_fakery не верно обрабатывает models.PositiveBigIntegerField
@@ -27,7 +27,7 @@ def tg_chat_factory(faker: Faker, fakery: Factory[TgChat]) -> TgChatFactory:
     return factory
 
 
-@pytest.fixture()
+@pytest.fixture
 def tg_user_factory(faker: Faker, fakery: Factory[TgUser]) -> TgUserFactory:
     def factory(**fields: Any) -> TgUser:
         fields.setdefault("is_bot", False)
@@ -38,11 +38,11 @@ def tg_user_factory(faker: Faker, fakery: Factory[TgUser]) -> TgUserFactory:
     return factory
 
 
-@pytest.fixture()
+@pytest.fixture
 def tg_chat(tg_chat_factory: TgChatFactory) -> TgChat:
     return tg_chat_factory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def tg_user(tg_user_factory: TgUserFactory) -> TgUser:
     return tg_user_factory()

@@ -13,12 +13,12 @@ if TYPE_CHECKING:
 pytestmark = [pytest.mark.django_db]
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_send_message(mocker: "MockerFixture") -> "MockType":
     return mocker.patch("telegram.ext.ExtBot.send_message")
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_send_message(tg_chat: "TgChat", mock_send_message: "MockType") -> None:
     await TgSendMessage(text="text", chat=tg_chat)()
 

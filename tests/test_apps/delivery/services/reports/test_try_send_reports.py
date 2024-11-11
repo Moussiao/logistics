@@ -27,7 +27,7 @@ class TestSender(OrdersReportSender):
         assert isinstance(partner, Partner)
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_send_report(mocker: MockerFixture) -> MockType:
     return mocker.patch.object(
         target=TrySendReports,
@@ -36,7 +36,7 @@ def mock_send_report(mocker: MockerFixture) -> MockType:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_send_to_partner(mocker: MockerFixture) -> MockType:
     return mocker.patch.object(
         target=TrySendReports,
@@ -45,7 +45,7 @@ def mock_send_to_partner(mocker: MockerFixture) -> MockType:
     )
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 @pytest.mark.parametrize("report_type", [ReportType.NEW_ORDERS, ReportType.BYUYOUT_ORDERS])
 async def test_send_to_active_partners(
     report_type: ReportType,
@@ -61,7 +61,7 @@ async def test_send_to_active_partners(
     assert mock_send_report.call_count == partners_count * sender.get_reports_count()
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 @pytest.mark.parametrize("report_type", [ReportType.NEW_ORDERS, ReportType.BYUYOUT_ORDERS])
 async def test_empty_send_to_active_partners(
     report_type: ReportType,

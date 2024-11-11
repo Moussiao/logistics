@@ -20,7 +20,7 @@ def test_get_order(logistician_client: "Client", order: "Order") -> None:
     assert response_json["id"] == order.pk
     assert response_json["external_id"] == order.external_id
     assert response_json["external_verbose"] == order.external_verbose
-    assert response_json["status"] == order.status
+    assert response_json["state"] == order.state
     assert response_json["comment"] == order.comment
 
 

@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, final
 import attr
 from django.db import transaction
 
-from apps.delivery.models import Customer, CustomerAddress, Order, Partner, Product
+from apps.delivery.models import Customer, CustomerAddress, Order, OrderProduct, Partner, Product
 from apps.delivery.services.orders.exceptions import (
     DuplicateExternalIdOrderError,
     InvalidCountryCodeOrderError,
@@ -20,13 +20,6 @@ if TYPE_CHECKING:
 @final
 @attr.dataclass(slots=True, frozen=True)
 class CreateOrder:
-    """
-    Класс, инкапсулирующий логику по созданию заказа.
-
-    Не ассинхронный по причине, что происходит работа только с ORM.
-    Тем самым под капотом бы пришлось постоянно вызывать sync_to_async.
-    """
-
     _order_schema: "OrderRequest"
 
     def __call__(self) -> Order:
@@ -111,7 +104,7 @@ class CreateOrder:
         customer: Customer,
         customer_address: CustomerAddress,
     ) -> Order:
-        total_price = sum(x.price * x.amount for x in self._order_schema.products)
+        total_price = sum(x.price * x.quantity for x in self._order_schema.products)
 
         return Order.objects.create(
             partner=partner,
@@ -119,7 +112,7 @@ class CreateOrder:
             customer_address=customer_address,
             external_id=self._order_schema.external_id,
             external_verbose=self._order_schema.external_verbose or "",
-            status=Order.Status.NEW,
+            state=Order.State.NEW,
             expected_delivery_date=self._order_schema.expected_delivery_date,
             total_price=total_price,
             comment=self._order_schema.comment or "",
@@ -130,5 +123,11 @@ class CreateOrder:
             product, _x = Product.objects.get_or_create(
                 name=product_schema.name, defaults={"price": product_schema.price}
             )
-            for _x in range(product_schema.amount):
-                order.products.add(product)
+
+            order_product = OrderProduct(
+                product=product,
+                order=order,
+                quantity=product_schema.quantity,
+                total_price=product_schema.quantity * product_schema.price,
+            )
+            order_product.save()

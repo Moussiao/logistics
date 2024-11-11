@@ -8,7 +8,7 @@ from apps.delivery.api.schemas.customer_address import (
     CustomerAddressRequest,
     CustomerAddressResponse,
 )
-from apps.delivery.api.schemas.product import ProductRequest, ProductResponse
+from apps.delivery.api.schemas.product import OrderProductResponse, ProductRequest
 from apps.delivery.models import Order
 
 
@@ -26,12 +26,16 @@ class OrderRequest(ModelSchema):
         fields = ("external_verbose", "expected_delivery_date", "comment")
 
 
+class EditOrderRequest(Schema):
+    comment: str | None = Field(None, max_length=255)
+
+
 class OrderResponse(ModelSchema):
     class Meta:
         model = Order
         fields = (
             "id",
-            "status",
+            "state",
             "delivery_date",
             "expected_delivery_date",
             "total_price",
@@ -41,7 +45,7 @@ class OrderResponse(ModelSchema):
 class DetailOrderResponse(ModelSchema):
     customer: CustomerResponse
     customer_address: CustomerAddressResponse
-    products: list[ProductResponse]
+    products: list[OrderProductResponse]
 
     class Meta:
         model = Order
@@ -49,7 +53,8 @@ class DetailOrderResponse(ModelSchema):
             "id",
             "external_id",
             "external_verbose",
-            "status",
+            "state",
+            "state_changed_at",
             "delivery_date",
             "expected_delivery_date",
             "total_price",
@@ -73,7 +78,7 @@ class OrdersFilters(Schema):
     cursor: str | None = None
 
     ids: str | None = None
-    status: Order.Status | None = None
+    states: str | None = None
     partner_id: int | None = None
     delivery_date_start: date | None = None
     delivery_date_end: date | None = None

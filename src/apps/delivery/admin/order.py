@@ -1,8 +1,16 @@
 from typing import final
 
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
-from apps.delivery.models import Order
+from apps.delivery.models import Order, OrderProduct
+
+
+class OrderProductInline(admin.StackedInline):
+    extra = 1
+    model = OrderProduct
+    verbose_name = _("Заказ")
+    verbose_name_plural = _("Заказы")
 
 
 @final
@@ -11,13 +19,13 @@ class OrderAdmin(admin.ModelAdmin[Order]):
     fields = (
         "external_id",
         "external_verbose",
-        "status",
+        "state",
         "delivery_date",
         "expected_delivery_date",
         "customer",
         "customer_address",
-        "products",
         "total_price",
         "partner",
         "comment",
     )
+    inlines = (OrderProductInline,)

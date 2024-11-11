@@ -10,7 +10,7 @@ api_auth = (AccessTokenAuth(),)
 if settings.DEBUG:
     from ninja.security import django_auth
 
-    api_auth = (django_auth, *api_auth)
+    api_auth = (*api_auth, django_auth)
 
 
 api = NinjaAPI(auth=api_auth, title="Logistic API", urls_namespace="api")

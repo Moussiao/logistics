@@ -1,6 +1,7 @@
 from typing import final
 
 from django.db import models
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from django_stubs_ext.db.models import TypedModelMeta
 
@@ -9,17 +10,19 @@ from core.models import TimedMixin
 
 @final
 class Order(TimedMixin, models.Model):
-    class Status(models.TextChoices):
+    class State(models.TextChoices):
         NEW = "new", _("Новый заказ")
+        PROCESSING = "processing", _("Обработка")
         DELIVERY = "delivery", _("Доставка")
         PAID = "paid", _("Оплачен")
-        RETURN = "return", _("Возврат")
+        CANCELED = "canceled", _("Отменен")
 
     external_id = models.PositiveIntegerField(_("Внешний ID"), db_index=True)
     external_verbose = models.CharField(_("Внешнее наименование"), max_length=150, blank=True)
-    status = models.CharField(
-        _("Статус"), max_length=16, default=Status.NEW, choices=Status.choices
+    state = models.CharField(
+        _("Состояние"), max_length=16, default=State.NEW, choices=State.choices
     )
+    state_changed_at = models.DateTimeField(_("Дата изменения состояния"), default=now)
     delivery_date = models.DateField(_("Дата доставки"), db_index=True, null=True, blank=True)
     expected_delivery_date = models.DateField(_("Ожидаемая дата доставки"), db_index=True)
     total_price = models.DecimalField(_("Стоимость"), max_digits=10, decimal_places=2)
@@ -43,13 +46,10 @@ class Order(TimedMixin, models.Model):
         on_delete=models.PROTECT,
         related_name="orders",
     )
-    products = models.ManyToManyField(
-        to="delivery.Product", verbose_name=_("Продукты"), related_name="orders"
-    )
 
     class Meta(TypedModelMeta):
         verbose_name = _("Заказ")
         verbose_name_plural = _("Заказы")
 
     def __str__(self) -> str:
-        return f"{self.external_id} - {self.status}"
+        return f"{self.external_id} - {self.state}"
