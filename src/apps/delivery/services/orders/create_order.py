@@ -3,18 +3,25 @@ from typing import TYPE_CHECKING, final
 import attr
 from django.db import transaction
 
-from apps.delivery.models import Customer, CustomerAddress, Order, OrderProduct, Partner, Product
-from apps.delivery.services.orders.exceptions import (
+from src.apps.delivery.models import (
+    Customer,
+    CustomerAddress,
+    Order,
+    OrderProduct,
+    Partner,
+    Product,
+)
+from src.apps.delivery.services.orders.exceptions import (
     DuplicateExternalIdOrderError,
     InvalidCountryCodeOrderError,
     PartnerNotExistsOrderError,
 )
-from apps.geo.models import City, Region
-from apps.geo.services import GetCountryByCode, InvalidCountryCodeError
+from src.apps.geo.models import City, Region
+from src.apps.geo.services import GetCountryByCode, InvalidCountryCodeError
 
 if TYPE_CHECKING:
-    from apps.delivery.api.schemas import OrderRequest
-    from apps.geo.models import Country
+    from src.apps.delivery.api.schemas import OrderRequest
+    from src.apps.geo.models import Country
 
 
 @final
@@ -41,7 +48,7 @@ class CreateOrder:
 
     def _get_partner(self) -> Partner:
         try:
-            partner = Partner.objects.get(name=self._order_schema.partner)
+            partner = Partner.objects.get(id=self._order_schema.partner_id)
         except Partner.DoesNotExist as exc:
             raise PartnerNotExistsOrderError from exc
 

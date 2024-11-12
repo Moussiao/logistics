@@ -1,4 +1,4 @@
-from core.settings.environ import env
+from src.core.settings.environ import env
 
 # fmt: off
 MIDDLEWARE: list[str] = [

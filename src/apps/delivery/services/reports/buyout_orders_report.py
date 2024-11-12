@@ -6,9 +6,9 @@ from typing import final
 from dateutil.relativedelta import relativedelta
 from django.db.models import QuerySet
 
-from apps.delivery.models import Order
-from apps.delivery.services.reports.base import OrdersReport
-from apps.delivery.services.reports.types import ReportType
+from src.apps.delivery.models import Order
+from src.apps.delivery.services.reports.base import OrdersReport
+from src.apps.delivery.services.reports.types import ReportType
 
 
 class BaseBuyoutedOrdersReport(OrdersReport):

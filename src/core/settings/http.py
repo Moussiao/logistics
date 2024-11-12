@@ -1,4 +1,4 @@
-from core.settings.environ import env
+from src.core.settings.environ import env
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", cast=str)
 

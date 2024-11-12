@@ -5,5 +5,5 @@ from django.utils.translation import gettext_lazy as _
 class DeliveryConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
 
-    name = "apps.delivery"
+    name = "src.apps.delivery"
     verbose_name = _("Доставка")

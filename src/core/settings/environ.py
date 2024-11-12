@@ -1,6 +1,6 @@
 import environ
 
-from core.settings.common import BASE_DIR
+from src.core.settings.common import BASE_DIR
 
 __all__ = ("env",)
 

@@ -3,8 +3,8 @@ from django.core.validators import validate_email
 from ninja import ModelSchema
 from pydantic import constr, field_validator
 
-from apps.delivery.models import Customer
-from core.validators import validate_phone
+from src.apps.delivery.models import Customer
+from src.core.validators import validate_phone
 
 
 class CustomerRequest(ModelSchema):

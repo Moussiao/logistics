@@ -3,7 +3,7 @@ from typing import Any, Protocol, final
 import pytest
 from django_fakery.faker_factory import Factory
 
-from apps.geo.models import Country, TimeZone
+from src.apps.geo.models import Country, TimeZone
 
 
 @final

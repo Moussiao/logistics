@@ -4,7 +4,7 @@ import attr
 from django.utils.timezone import now
 from transitions import Machine
 
-from apps.delivery.models import Order
+from src.apps.delivery.models import Order
 
 
 @attr.dataclass

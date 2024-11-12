@@ -5,15 +5,15 @@ from typing import TYPE_CHECKING, final
 
 from django.utils.timezone import now
 
-from apps.delivery.models import Partner
-from apps.delivery.services.reports.buyout_orders_report import (
+from src.apps.delivery.models import Partner
+from src.apps.delivery.services.reports.buyout_orders_report import (
     PreviousDayBuyoutedOrders,
     PreviousMonthBuyoutedOrders,
 )
-from apps.delivery.services.reports.exceptions import NotAvailableReportError, SenderError
-from apps.delivery.services.reports.new_orders_report import TodayNewOrders, TomorrowNewOrders
-from apps.delivery.services.reports.senders import TelegramSender
-from apps.delivery.services.reports.types import ReportType
+from src.apps.delivery.services.reports.exceptions import NotAvailableReportError, SenderError
+from src.apps.delivery.services.reports.new_orders_report import TodayNewOrders, TomorrowNewOrders
+from src.apps.delivery.services.reports.senders import TelegramSender
+from src.apps.delivery.services.reports.types import ReportType
 
 if TYPE_CHECKING:
     from .base import OrdersReport, OrdersReportSender

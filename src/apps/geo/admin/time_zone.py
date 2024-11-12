@@ -2,7 +2,7 @@ from typing import final
 
 from django.contrib import admin
 
-from apps.geo.models import TimeZone
+from src.apps.geo.models import TimeZone
 
 
 @final

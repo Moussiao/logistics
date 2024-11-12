@@ -1,8 +1,8 @@
 from django.http import HttpRequest
 from ninja import Query, Router
 
-from apps.delivery.api.schemas import PartnersFilters, PartnersResponse
-from apps.delivery.services.partners.get_partners import GetPartners
+from src.apps.delivery.api.schemas import PartnersFilters, PartnersResponse
+from src.apps.delivery.services.partners.get_partners import GetPartners
 
 router = Router()
 

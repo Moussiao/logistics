@@ -2,11 +2,11 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from apps.delivery.services.orders.get_order import GetOrder, OrderNotFoundError
+from src.apps.delivery.services.orders.get_order import GetOrder, OrderNotFoundError
 
 if TYPE_CHECKING:
-    from apps.delivery.models import Order
-    from apps.users.models import User
+    from src.apps.delivery.models import Order
+    from src.apps.users.models import User
 
 pytestmark = [pytest.mark.django_db]
 

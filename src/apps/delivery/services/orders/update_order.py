@@ -3,10 +3,10 @@ from typing import final
 import attr
 from django.db.models import Q
 
-from apps.delivery.api.schemas import EditOrderRequest
-from apps.delivery.models import Order
-from apps.delivery.services.orders.exceptions import OrderNotFoundError
-from apps.users.models import User
+from src.apps.delivery.api.schemas import EditOrderRequest
+from src.apps.delivery.models import Order
+from src.apps.delivery.services.orders.exceptions import OrderNotFoundError
+from src.apps.users.models import User
 
 
 @final

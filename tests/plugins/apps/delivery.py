@@ -3,7 +3,7 @@ from typing import Any, Protocol, final
 import pytest
 from django_fakery.faker_factory import Factory
 
-from apps.delivery.models import Order, Partner
+from src.apps.delivery.models import Order, Partner
 
 
 @final

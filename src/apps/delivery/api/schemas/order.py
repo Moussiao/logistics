@@ -1,20 +1,19 @@
 from datetime import date
 
 from ninja import Field, ModelSchema, Schema
-from pydantic import constr
 
-from apps.delivery.api.schemas.customer import CustomerRequest, CustomerResponse
-from apps.delivery.api.schemas.customer_address import (
+from src.apps.delivery.api.schemas.customer import CustomerRequest, CustomerResponse
+from src.apps.delivery.api.schemas.customer_address import (
     CustomerAddressRequest,
     CustomerAddressResponse,
 )
-from apps.delivery.api.schemas.product import OrderProductResponse, ProductRequest
-from apps.delivery.models import Order
+from src.apps.delivery.api.schemas.product import OrderProductResponse, ProductRequest
+from src.apps.delivery.models import Order
 
 
 class OrderRequest(ModelSchema):
     external_id: int = Field(ge=0)
-    partner: constr(to_lower=True)
+    partner_id: int = Field(ge=0)
     customer: CustomerRequest
     customer_address: CustomerAddressRequest
     # Используем ограничения дабы максимальная сумма,

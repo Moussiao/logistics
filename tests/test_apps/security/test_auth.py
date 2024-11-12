@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 import pytest
 from freezegun.api import FrozenDateTimeFactory, StepTickTimeFactory, TickingDateTimeFactory
 
-from apps.security.auth import AccessTokenAuth
-from apps.security.jwt import (
+from src.apps.security.auth import AccessTokenAuth
+from src.apps.security.jwt import (
     create_access_token,
     create_user_access_token,
     decode_user_access_token,
@@ -14,14 +14,14 @@ from apps.security.jwt import (
 if TYPE_CHECKING:
     from django.conf import LazySettings
 
-    from apps.users.models import User
+    from src.apps.users.models import User
 
 
 type Freezer = FrozenDateTimeFactory | StepTickTimeFactory | TickingDateTimeFactory
 
 
 if TYPE_CHECKING:
-    from apps.users.models import User
+    from src.apps.users.models import User
 
 
 @pytest.mark.django_db

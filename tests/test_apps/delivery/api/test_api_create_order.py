@@ -5,7 +5,7 @@ import pytest
 from django.test import Client
 from django.urls import reverse
 
-from apps.delivery.models import Order, Partner
+from src.apps.delivery.models import Order, Partner
 
 if TYPE_CHECKING:
     from tests.test_apps.delivery.api.conftest import CustomerRequestFactory, OrderRequestFactory
@@ -19,7 +19,7 @@ def test_create_order(
     admin_client: Client,
     order_request_factory: "OrderRequestFactory",
 ) -> None:
-    create_order_data = order_request_factory.build(partner=partner.name).dict()
+    create_order_data = order_request_factory.build(partner_id=partner.pk).dict()
 
     response = admin_client.post(
         reverse("api:create_order"),

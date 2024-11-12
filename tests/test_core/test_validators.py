@@ -3,7 +3,7 @@ from contextlib import nullcontext as does_not_raise
 import pytest
 from django.core.exceptions import ValidationError
 
-from core.validators import validate_country_code, validate_phone
+from src.core.validators import validate_country_code, validate_phone
 
 
 @pytest.mark.parametrize("valid_phone", ["+79111111111"])

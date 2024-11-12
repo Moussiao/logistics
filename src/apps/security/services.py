@@ -5,12 +5,12 @@ from typing import TYPE_CHECKING, final
 
 import attr
 
-from apps.security.jwt import create_user_access_token
-from apps.tg_bots.mini_app import InitDataValidator, InvalidInitDataError
-from apps.users.models import User
+from src.apps.security.jwt import create_user_access_token
+from src.apps.tg_bots.mini_app import InitDataValidator, InvalidInitDataError
+from src.apps.users.models import User
 
 if TYPE_CHECKING:
-    from apps.security.api.schemas import TokenRequest
+    from src.apps.security.api.schemas import TokenRequest
 
 log = getLogger(__name__)
 

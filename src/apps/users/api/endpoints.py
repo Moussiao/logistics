@@ -5,8 +5,8 @@ from django.http import HttpRequest
 from ninja import Router
 from ninja.errors import HttpError
 
-from apps.users.api.schemas import UserResponse
-from apps.users.models import User
+from src.apps.users.api.schemas import UserResponse
+from src.apps.users.models import User
 
 router = Router()
 

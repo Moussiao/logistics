@@ -5,9 +5,9 @@ from asgiref.sync import sync_to_async
 from django.db.models import QuerySet
 from pytest_mock import MockerFixture, MockType
 
-from apps.delivery.models import Partner
-from apps.delivery.services.reports import NotAvailableReportError, ReportType, TrySendReports
-from apps.delivery.services.reports.base import OrdersReportSender
+from src.apps.delivery.models import Partner
+from src.apps.delivery.services.reports import NotAvailableReportError, ReportType, TrySendReports
+from src.apps.delivery.services.reports.base import OrdersReportSender
 
 if TYPE_CHECKING:
     from tests.plugins.apps.delivery import PartnersFactory

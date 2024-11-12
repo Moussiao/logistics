@@ -5,7 +5,7 @@ from django.conf import settings
 from telegram.ext import ExtBot as TelegramBot
 
 if TYPE_CHECKING:
-    from apps.tg_bots.models import TgChat
+    from src.apps.tg_bots.models import TgChat
 
 
 @final

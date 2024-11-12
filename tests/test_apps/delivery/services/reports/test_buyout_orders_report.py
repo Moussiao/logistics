@@ -5,15 +5,15 @@ import pytest
 from dateutil.relativedelta import relativedelta
 from django.utils.timezone import localdate
 
-from apps.delivery.models import Order, Partner
-from apps.delivery.services.reports import (
+from src.apps.delivery.models import Order, Partner
+from src.apps.delivery.services.reports import (
     NotAvailableReportError,
     PreviousDayBuyoutedOrders,
     PreviousMonthBuyoutedOrders,
 )
 
 if TYPE_CHECKING:
-    from apps.geo.models import TimeZone
+    from src.apps.geo.models import TimeZone
     from tests.plugins.apps.delivery import OrderFactory, PartnerFactory
 
 

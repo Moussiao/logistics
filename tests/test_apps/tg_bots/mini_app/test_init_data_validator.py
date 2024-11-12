@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from apps.tg_bots.mini_app import (
+from src.apps.tg_bots.mini_app import (
     ExpiredInitDataError,
     InitDataValidator,
     InvalidFormatInitDataError,

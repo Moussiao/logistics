@@ -7,11 +7,11 @@ from asgiref.sync import sync_to_async
 from django.db.models import QuerySet
 from django.utils.timezone import is_naive, localtime, make_aware, now
 
-from apps.delivery.services.reports.exceptions import NotAvailableReportError, SenderError
+from src.apps.delivery.services.reports.exceptions import NotAvailableReportError, SenderError
 
 if TYPE_CHECKING:
-    from apps.delivery.models import Order, Partner
-    from apps.delivery.services.reports.types import ReportType
+    from src.apps.delivery.models import Order, Partner
+    from src.apps.delivery.services.reports.types import ReportType
 
 
 class OrdersReport(ABC):

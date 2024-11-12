@@ -3,12 +3,12 @@ from typing import TYPE_CHECKING
 import pytest
 from django.utils.timezone import localdate
 
-from apps.delivery.api.schemas import OrdersFilters
-from apps.delivery.models import Order, Partner
-from apps.delivery.services.orders.get_orders import GetOrders
+from src.apps.delivery.api.schemas import OrdersFilters
+from src.apps.delivery.models import Order, Partner
+from src.apps.delivery.services.orders.get_orders import GetOrders
 
 if TYPE_CHECKING:
-    from apps.users.models import User
+    from src.apps.users.models import User
     from tests.plugins.apps.delivery import OrdersFactory, PartnerFactory
 
 pytestmark = [pytest.mark.django_db]

@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 import pytest
 from django.utils.timezone import now
 
-from apps.users.models import User
-from core.paginator import CursorPaginator
+from src.apps.users.models import User
+from src.core.paginator import CursorPaginator
 
 if TYPE_CHECKING:
     from tests.plugins.apps.users import UsersFactory

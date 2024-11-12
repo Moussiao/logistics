@@ -54,10 +54,10 @@ pre-commit = "^3.8.0"
 ruff = "^0.7.3"
 
 [tool.django-stubs]
-django_settings_module = "core.settings"
+django_settings_module = "src.core.settings"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "core.settings"
+DJANGO_SETTINGS_MODULE = "src.core.settings"
 addopts = "--cov=. --cov-report=term-missing:skip-covered --cov-report=html --cov-fail-under=0"
 filterwarnings = [
     "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning:pytest_freezegun:17",
@@ -65,7 +65,6 @@ filterwarnings = [
     "ignore:Support for class-based `config` is deprecated, use ConfigDict instead.:DeprecationWarning:pydantic._internal._config:291",
 ]
 python_files = "test*.py"
-pythonpath = ". src"
 # Timeout for tests, so they can not take longer than this amount of seconds.
 # (https://pypi.org/project/pytest-timeout/)
 timeout = 10
@@ -147,13 +146,4 @@ ignore = [
     "TD003",  # Missing issue link on the line following this TODO
     "TD005",  # Missing issue description after `TODO`
     "TRY003",  # avoid specifying long messages outside the exception class
-]
-
-[tool.ruff.lint.isort]
-known-local-folder = ["apps", "core", "tests"]
-
-[tool.pyright]
-executionEnvironments = [
-    {root = "src"},
-    {root = "tests", extraPaths=["src"]},
 ]

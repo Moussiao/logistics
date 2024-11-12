@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import final
 
-from apps.delivery.models import Order
-from apps.delivery.services.orders.exceptions import OrderNotFoundError
-from apps.delivery.services.orders.state_machine import OrderFSM
-from apps.users.models import User
+from src.apps.delivery.models import Order
+from src.apps.delivery.services.orders.exceptions import OrderNotFoundError
+from src.apps.delivery.services.orders.state_machine import OrderFSM
+from src.apps.users.models import User
 
 
 class BaseAction(ABC):

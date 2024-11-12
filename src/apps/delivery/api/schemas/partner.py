@@ -1,6 +1,6 @@
 from ninja import Field, ModelSchema, Schema
 
-from apps.delivery.models import Partner
+from src.apps.delivery.models import Partner
 
 
 class PartnerResponse(ModelSchema):

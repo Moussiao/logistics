@@ -1,6 +1,6 @@
 import pytest
 
-from core.utils import safe_string_to_integers
+from src.core.utils import safe_string_to_integers
 
 
 @pytest.mark.parametrize(

@@ -4,8 +4,8 @@ from django.http import HttpRequest
 from ninja import Router
 from ninja.errors import HttpError
 
-from apps.security.api.schemas import TokenRequest, TokenResponse
-from apps.security.services import CreateAccessToken, CreateAccessTokenError
+from src.apps.security.api.schemas import TokenRequest, TokenResponse
+from src.apps.security.services import CreateAccessToken, CreateAccessTokenError
 
 router = Router()
 

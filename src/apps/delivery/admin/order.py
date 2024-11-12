@@ -3,7 +3,7 @@ from typing import final
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from apps.delivery.models import Order, OrderProduct
+from src.apps.delivery.models import Order, OrderProduct
 
 
 class OrderProductInline(admin.StackedInline):

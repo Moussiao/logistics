@@ -9,7 +9,7 @@ from freezegun.api import (
 )
 from jwt import ExpiredSignatureError
 
-from apps.security.jwt import (
+from src.apps.security.jwt import (
     InvalidUserAccessTokenPayloadError,
     create_access_token,
     create_user_access_token,
@@ -20,7 +20,7 @@ from apps.security.jwt import (
 if TYPE_CHECKING:
     from django.conf import LazySettings
 
-    from apps.users.models import User
+    from src.apps.users.models import User
 
 
 type Freezer = FrozenDateTimeFactory | StepTickTimeFactory | TickingDateTimeFactory

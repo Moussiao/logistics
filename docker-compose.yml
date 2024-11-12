@@ -38,7 +38,7 @@ services:
     build:
       target: "development_build"
       context: .
-    command: python -Wd src/manage.py runserver 0.0.0.0:8000
+    command: python -Wd manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
 
@@ -61,7 +61,7 @@ services:
     build:
       target: "development_build"
       context: .
-    command: python -Wd src/manage.py start_chat_bot
+    command: python -Wd manage.py start_chat_bot
 
     depends_on:
       - db
@@ -78,7 +78,7 @@ services:
     build:
       target: "development_build"
       context: .
-    command: celery --workdir=src -A core.celery worker --beat -l INFO
+    command: celery -A src.core.celery worker --beat -l INFO
 
     depends_on:
       - db

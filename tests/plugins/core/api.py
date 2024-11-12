@@ -4,10 +4,10 @@ import pytest
 from django.test import Client
 from ninja.security import django_auth
 
-from core.api import api
+from src.core.api import api
 
 if TYPE_CHECKING:
-    from apps.users.models import User
+    from src.apps.users.models import User
 
 
 @pytest.fixture(autouse=True)

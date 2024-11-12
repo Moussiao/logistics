@@ -4,8 +4,8 @@ import attr
 from django.core.paginator import Paginator
 from pydantic import TypeAdapter
 
-from apps.delivery.api.schemas import PartnerResponse, PartnersFilters, PartnersResponse
-from apps.delivery.models import Partner
+from src.apps.delivery.api.schemas import PartnerResponse, PartnersFilters, PartnersResponse
+from src.apps.delivery.models import Partner
 
 _partner_response_adapter = TypeAdapter(list[PartnerResponse])
 

@@ -3,9 +3,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from apps.security.api.schemas import TokenRequest
-from apps.security.jwt import decode_user_access_token
-from apps.security.services import (
+from src.apps.security.api.schemas import TokenRequest
+from src.apps.security.jwt import decode_user_access_token
+from src.apps.security.services import (
     CreateAccessToken,
     CreateAccessTokenError,
     InvalidParsedInitDataSignatureError,
@@ -15,13 +15,13 @@ from apps.security.services import (
 if TYPE_CHECKING:
     from pytest_mock import MockerFixture, MockType
 
-    from apps.users.models import User
+    from src.apps.users.models import User
     from tests.plugins.apps.tg_bots import TgUserFactory
 
 
 @pytest.fixture
 def mock_init_data_validate(mocker: "MockerFixture") -> "MockType":
-    return mocker.patch("apps.tg_bots.mini_app.InitDataValidator.validate", return_value=None)
+    return mocker.patch("src.apps.tg_bots.mini_app.InitDataValidator.validate", return_value=None)
 
 
 @pytest.mark.django_db

@@ -8,7 +8,7 @@ from polyfactory import Use
 from polyfactory.factories.pydantic_factory import ModelFactory
 from polyfactory.pytest_plugin import register_fixture
 
-from apps.delivery.api.schemas import (
+from src.apps.delivery.api.schemas import (
     CustomerAddressRequest,
     CustomerRequest,
     OrderRequest,

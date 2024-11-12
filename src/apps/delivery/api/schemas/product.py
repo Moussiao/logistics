@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from ninja import Field, ModelSchema
 
-from apps.delivery.models import OrderProduct, Product
+from src.apps.delivery.models import OrderProduct, Product
 
 MIN_PRICE = 0
 MAX_PRICE = 150000

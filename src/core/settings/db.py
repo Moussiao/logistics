@@ -1,4 +1,4 @@
-from core.settings.environ import env
+from src.core.settings.environ import env
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

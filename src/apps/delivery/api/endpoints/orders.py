@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from ninja import Query, Router, Schema
 from ninja.errors import HttpError
 
-from apps.delivery.api.schemas import (
+from src.apps.delivery.api.schemas import (
     CreateOrderResponse,
     DetailOrderResponse,
     EditOrderRequest,
@@ -13,21 +13,21 @@ from apps.delivery.api.schemas import (
     OrdersFilters,
     OrdersResponse,
 )
-from apps.delivery.services.orders.create_order import CreateOrder
-from apps.delivery.services.orders.exceptions import CreateOrderError, OrderNotFoundError
-from apps.delivery.services.orders.get_order import GetOrder
-from apps.delivery.services.orders.get_orders import GetOrders
-from apps.delivery.services.orders.state_machine_actions import (
+from src.apps.delivery.services.orders.create_order import CreateOrder
+from src.apps.delivery.services.orders.exceptions import CreateOrderError, OrderNotFoundError
+from src.apps.delivery.services.orders.get_order import GetOrder
+from src.apps.delivery.services.orders.get_orders import GetOrders
+from src.apps.delivery.services.orders.state_machine_actions import (
     CancelOrder,
     CustomerPaid,
     DriveToCustomer,
     TakeOrderToJob,
 )
-from apps.delivery.services.orders.update_order import UpdateOrder
-from core.schemas import ErrorEntity, ErrorResponse
+from src.apps.delivery.services.orders.update_order import UpdateOrder
+from src.core.schemas import ErrorEntity, ErrorResponse
 
 if TYPE_CHECKING:
-    from apps.delivery.models import Order
+    from src.apps.delivery.models import Order
 
 router = Router()
 

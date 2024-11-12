@@ -2,10 +2,10 @@ from typing import final
 
 from django.db.models import QuerySet
 
-from apps.delivery.models import Partner
-from apps.delivery.services.reports.base import OrdersReportSender
-from apps.delivery.services.reports.exceptions import SenderError
-from apps.tg_bots.services import TgSendMessage
+from src.apps.delivery.models import Partner
+from src.apps.delivery.services.reports.base import OrdersReportSender
+from src.apps.delivery.services.reports.exceptions import SenderError
+from src.apps.tg_bots.services import TgSendMessage
 
 
 class PartnerWithoutTgChatError(SenderError):

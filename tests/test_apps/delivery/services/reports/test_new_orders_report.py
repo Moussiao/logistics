@@ -4,15 +4,15 @@ from typing import TYPE_CHECKING
 import pytest
 from django.utils.timezone import localdate
 
-from apps.delivery.models import Order
-from apps.delivery.services.reports import (
+from src.apps.delivery.models import Order
+from src.apps.delivery.services.reports import (
     NotAvailableReportError,
     TodayNewOrders,
     TomorrowNewOrders,
 )
 
 if TYPE_CHECKING:
-    from apps.geo.models import TimeZone
+    from src.apps.geo.models import TimeZone
     from tests.plugins.apps.delivery import OrderFactory, PartnerFactory
 
 

@@ -7,7 +7,7 @@ from django.urls import reverse
 if TYPE_CHECKING:
     from django.test import Client
 
-    from apps.users.models import User
+    from src.apps.users.models import User
 
 pytestmark = [pytest.mark.django_db]
 

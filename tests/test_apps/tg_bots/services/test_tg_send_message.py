@@ -2,12 +2,12 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from apps.tg_bots.services import TgSendMessage
+from src.apps.tg_bots.services import TgSendMessage
 
 if TYPE_CHECKING:
     from pytest_mock import MockerFixture, MockType
 
-    from apps.tg_bots.models import TgChat
+    from src.apps.tg_bots.models import TgChat
 
 
 pytestmark = [pytest.mark.django_db]

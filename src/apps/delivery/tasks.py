@@ -2,7 +2,7 @@ from asgiref.sync import async_to_sync
 from celery import shared_task
 from django.utils.timezone import now
 
-from apps.delivery.services.reports import ReportType, TelegramSender, TrySendReports
+from src.apps.delivery.services.reports import ReportType, TelegramSender, TrySendReports
 
 
 @shared_task(name="delivery.tasks.notify_of_new_orders")

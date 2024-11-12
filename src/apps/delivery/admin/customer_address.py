@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.delivery.models.customer_address import CustomerAddress
+from src.apps.delivery.models.customer_address import CustomerAddress
 
 
 @admin.register(CustomerAddress)

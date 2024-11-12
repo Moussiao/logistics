@@ -4,7 +4,7 @@ import pytest
 from django_fakery.faker_factory import Factory
 from faker import Faker
 
-from apps.tg_bots.models import TgChat, TgUser
+from src.apps.tg_bots.models import TgChat, TgUser
 
 
 @final

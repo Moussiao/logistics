@@ -1,7 +1,7 @@
 import django_stubs_ext
 from split_settings.tools import include, optional
 
-from core.settings.environ import env
+from src.core.settings.environ import env
 
 # Monkeypatching Django, so stubs will work for all generics,
 # see: https://github.com/typeddjango/django-stubs

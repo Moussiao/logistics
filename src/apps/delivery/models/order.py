@@ -5,7 +5,7 @@ from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from django_stubs_ext.db.models import TypedModelMeta
 
-from core.models import TimedMixin
+from src.core.models import TimedMixin
 
 
 @final

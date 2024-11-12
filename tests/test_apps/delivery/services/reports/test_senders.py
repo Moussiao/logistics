@@ -4,7 +4,7 @@ import pytest
 from asgiref.sync import sync_to_async
 from django.db.models import aprefetch_related_objects
 
-from apps.delivery.services.reports.senders import (
+from src.apps.delivery.services.reports.senders import (
     PartnerWithoutTgChatError,
     TelegramSender,
 )
@@ -12,7 +12,7 @@ from apps.delivery.services.reports.senders import (
 if TYPE_CHECKING:
     from pytest_mock import MockerFixture, MockType
 
-    from apps.tg_bots.models import TgChat
+    from src.apps.tg_bots.models import TgChat
     from tests.plugins.apps.delivery import PartnerFactory
 
 # transaction=True для верной работы sync_to_async.

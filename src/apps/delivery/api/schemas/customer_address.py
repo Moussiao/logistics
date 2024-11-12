@@ -2,8 +2,8 @@ from django.core.exceptions import ValidationError
 from ninja import Field, ModelSchema
 from pydantic import field_validator
 
-from apps.delivery.models import CustomerAddress
-from core.validators import validate_country_code
+from src.apps.delivery.models import CustomerAddress
+from src.core.validators import validate_country_code
 
 
 class CustomerAddressRequest(ModelSchema):

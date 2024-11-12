@@ -1,6 +1,4 @@
-from datetime import timedelta
-
-from core.settings.environ import env
+from src.core.settings.environ import env
 
 
 AUTH_USER_MODEL = "users.User"

@@ -8,8 +8,8 @@ from django.utils.functional import SimpleLazyObject
 from jwt import ExpiredSignatureError, InvalidTokenError
 from ninja.security import HttpBearer
 
-from apps.security.jwt import UserAccessTokenPayload, decode_user_access_token
-from apps.users.models import User
+from src.apps.security.jwt import UserAccessTokenPayload, decode_user_access_token
+from src.apps.users.models import User
 
 log = getLogger(__name__)
 

@@ -1,6 +1,6 @@
 from ninja import Schema
 
-from apps.users.models import User
+from src.apps.users.models import User
 
 
 class UserResponse(Schema):

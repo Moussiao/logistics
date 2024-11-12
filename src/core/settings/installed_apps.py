@@ -1,4 +1,4 @@
-from core.settings.environ import env
+from src.core.settings.environ import env
 
 # fmt: off
 INSTALLED_APPS: list[str] = [
@@ -16,12 +16,12 @@ INSTALLED_APPS: list[str] = [
     "django.contrib.staticfiles",
 
     # Project apps
-    "core",
-    "apps.delivery",
-    "apps.geo",
-    "apps.security",
-    "apps.tg_bots",
-    "apps.users",
+    "src.core",
+    "src.apps.delivery",
+    "src.apps.geo",
+    "src.apps.security",
+    "src.apps.tg_bots",
+    "src.apps.users",
 ]
 
 if env("DEBUG", cast=bool):

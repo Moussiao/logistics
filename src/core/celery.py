@@ -10,7 +10,7 @@ log = getLogger(__name__)
 
 # Устанавливаем значение по умолчания
 # для среды DJANGO_SETTINGS_MODULE, чтобы Celery могла работать с Django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.core.settings")
 
 app = Celery("app")
 
@@ -37,7 +37,7 @@ def setup_periodic_tasks(sender: Celery, **kwargs: Any) -> None:
     Регистрирует задачи, которые выполняются в определенные периоды времени.
     (https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html#entries)
     """
-    from apps.delivery.tasks import notify_of_buyout_orders, notify_of_new_orders
+    from src.apps.delivery.tasks import notify_of_buyout_orders, notify_of_new_orders
 
     sender.add_periodic_task(
         schedule=crontab(hour="*/1", minute="0"),

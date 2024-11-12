@@ -2,7 +2,7 @@ import attr
 from pycountry import countries
 from pycountry.db import Country as CountryInfo
 
-from apps.geo.models import Country
+from src.apps.geo.models import Country
 
 
 class InvalidCountryCodeError(Exception):

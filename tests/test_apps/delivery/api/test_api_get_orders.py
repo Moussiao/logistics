@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 import pytest
 from django.urls import reverse
 
-from apps.delivery.models import Order
-from apps.delivery.services.orders.get_orders import GetOrders
+from src.apps.delivery.models import Order
+from src.apps.delivery.services.orders.get_orders import GetOrders
 
 if TYPE_CHECKING:
     from django.test import Client
