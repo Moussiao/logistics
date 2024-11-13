@@ -2,7 +2,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from src.apps.delivery.services.orders.get_order import GetOrder, OrderNotFoundError
+from src.apps.delivery.services.orders.exceptions import OrderNotFoundError
+from src.apps.delivery.services.orders.get_order import GetOrder
 
 if TYPE_CHECKING:
     from src.apps.delivery.models import Order

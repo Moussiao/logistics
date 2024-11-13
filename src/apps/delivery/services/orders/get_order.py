@@ -1,6 +1,7 @@
 from typing import final
 
 import attr
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
 
 from src.apps.delivery.models import Order
@@ -11,7 +12,7 @@ from src.apps.users.models import User
 @final
 @attr.dataclass(frozen=True, slots=True)
 class GetOrder:
-    _user: User
+    _user: User | AnonymousUser
     _order_id: int
 
     def __call__(self) -> Order:

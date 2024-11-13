@@ -2,7 +2,7 @@ from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
 
 import pytest
-from freezegun.api import FrozenDateTimeFactory, StepTickTimeFactory, TickingDateTimeFactory
+from freezegun.api import FrozenDateTimeFactory, StepTickTimeFactory
 
 from src.apps.security.auth import AccessTokenAuth
 from src.apps.security.jwt import (
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from src.apps.users.models import User
 
 
-type Freezer = FrozenDateTimeFactory | StepTickTimeFactory | TickingDateTimeFactory
+type Freezer = FrozenDateTimeFactory | StepTickTimeFactory
 
 
 if TYPE_CHECKING:
@@ -40,7 +40,7 @@ def test_expired_decode_access_token(
     freezer: Freezer,
     settings: "LazySettings",
 ) -> None:
-    expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)  # type: ignore[misc]
     token = create_user_access_token(user_id=user.pk)
     freezer.move_to(datetime.now(UTC) + expires_delta)
 

@@ -1,6 +1,7 @@
 from typing import final
 
 import attr
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q, QuerySet
 from pydantic import TypeAdapter
 
@@ -18,7 +19,7 @@ _orders_response_adapter = TypeAdapter(list[OrderResponse])
 class GetOrders:
     PAGE_SIZE = 10
 
-    _user: User
+    _user: User | AnonymousUser
     _filters: OrdersFilters
 
     def __call__(self) -> OrdersResponse:
@@ -33,14 +34,14 @@ class GetOrders:
             previous_cursor=page.previous_cursor,
         )
 
-    def _get_orders_page(self) -> CursorPage:
+    def _get_orders_page(self) -> CursorPage[Order]:
         orders_qs = self._get_orders_qs()
         paginator = CursorPaginator(orders_qs, page_size=self.PAGE_SIZE)
         return paginator.get_page(self._filters.cursor)
 
-    def _get_orders_qs(self) -> QuerySet[Order, dict]:
+    def _get_orders_qs(self) -> QuerySet[Order]:
         filters_q = Q()
-        if self._user.role == User.Role.DELIVERY_PARTNER:
+        if self._user.role == User.Role.DELIVERY_PARTNER:  # type: ignore[union-attr]
             filters_q &= Q(partner__user=self._user)
 
         if self._filters.ids is not None:
@@ -58,5 +59,4 @@ class GetOrders:
         if self._filters.expected_delivery_date_end is not None:
             filters_q &= Q(expected_delivery_date__lte=self._filters.expected_delivery_date_end)
 
-        fields = ("created_at",) + OrderResponse.Meta.fields
-        return Order.objects.filter(filters_q).values(*fields).order_by("-created_at")
+        return Order.objects.filter(filters_q).order_by("-created_at")

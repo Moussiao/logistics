@@ -1,4 +1,4 @@
-import environ
+import environ  # type: ignore[import-untyped]
 
 from src.core.settings.common import BASE_DIR
 

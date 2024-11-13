@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from typing import cast
 
 from django.http import HttpRequest
 from ninja import Router
@@ -18,4 +17,4 @@ def get_self_user(request: HttpRequest) -> User:
         # удален или глобальная аунтификация была убрана, либо работает не верно.
         raise HttpError(HTTPStatus.FORBIDDEN, message=HTTPStatus.FORBIDDEN.description)
 
-    return cast(User, request.user)
+    return request.user

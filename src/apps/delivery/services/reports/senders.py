@@ -19,7 +19,7 @@ class TelegramSender(OrdersReportSender):
         return Partner.objects.filter(tg_chat__isnull=False).select_related("tg_chat")
 
     async def _send(self, text: str, partner: "Partner") -> None:
-        if partner.tg_chat_id is None:
+        if partner.tg_chat is None:
             raise PartnerWithoutTgChatError(f"{partner} is unrelated to tg_chat")
 
         tg_message_sender = TgSendMessage(text=text, chat=partner.tg_chat)

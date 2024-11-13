@@ -15,7 +15,7 @@ class Command(BaseCommand):
     help = __doc__
 
     def handle(self, **options: Any) -> None:
-        application = ApplicationBuilder().token(settings.BOT_TOKEN).build()
+        application = ApplicationBuilder().token(settings.BOT_TOKEN).build()  # type: ignore[misc]
 
         application.add_handler(CommandHandler("help", self.help_command))
         application.add_handler(CommandHandler("start", self.start_command))

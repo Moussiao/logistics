@@ -1,4 +1,4 @@
-from typing import Any, Protocol, final
+from typing import Any, Protocol
 
 import pytest
 from django_fakery.faker_factory import Factory
@@ -6,22 +6,18 @@ from django_fakery.faker_factory import Factory
 from src.apps.delivery.models import Order, Partner
 
 
-@final
 class OrderFactory(Protocol):
     def __call__(self, **fields: Any) -> Order: ...
 
 
-@final
 class OrdersFactory(Protocol):
     def __call__(self, objs_quantity: int, **fields: Any) -> list[Order]: ...
 
 
-@final
 class PartnerFactory(Protocol):
     def __call__(self, **fields: Any) -> Partner: ...
 
 
-@final
 class PartnersFactory(Protocol):
     def __call__(self, objs_quantity: int, **fields: Any) -> list[Partner]: ...
 
@@ -29,7 +25,7 @@ class PartnersFactory(Protocol):
 @pytest.fixture
 def order_factory(fakery: Factory[Order]) -> OrderFactory:
     def factory(**fields: Any) -> Order:
-        return fakery.make(model=Order, fields=fields)  # type: ignore[call-overload]
+        return fakery.make(model=Order, fields=fields)  # type: ignore[call-overload, no-any-return]
 
     return factory
 
@@ -37,7 +33,7 @@ def order_factory(fakery: Factory[Order]) -> OrderFactory:
 @pytest.fixture
 def orders_factory(fakery: Factory[Order]) -> OrdersFactory:
     def factory(objs_quantity: int, **fields: Any) -> list[Order]:
-        return fakery.make(model=Order, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload]
+        return fakery.make(model=Order, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload, no-any-return]
 
     return factory
 
@@ -45,7 +41,7 @@ def orders_factory(fakery: Factory[Order]) -> OrdersFactory:
 @pytest.fixture
 def partner_factory(fakery: Factory[Partner]) -> PartnerFactory:
     def factory(**fields: Any) -> Partner:
-        return fakery.make(model=Partner, fields=fields)  # type: ignore[call-overload]
+        return fakery.make(model=Partner, fields=fields)  # type: ignore[call-overload, no-any-return]
 
     return factory
 
@@ -54,7 +50,7 @@ def partner_factory(fakery: Factory[Partner]) -> PartnerFactory:
 def partners_factory(fakery: Factory[Partner]) -> PartnersFactory:
     def factory(objs_quantity: int, **fields: Any) -> list[Partner]:
         fields.setdefault("active", True)
-        return fakery.make(model=Order, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload]
+        return fakery.make(model=Order, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload, no-any-return]
 
     return factory
 

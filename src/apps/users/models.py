@@ -3,6 +3,7 @@ from typing import final
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_stubs_ext.db.models import TypedModelMeta
 
 
 @final
@@ -16,7 +17,7 @@ class User(AbstractUser):
 
     updated_at = models.DateTimeField(_("Дата последнего изменения"), auto_now=True)
 
-    class Meta(AbstractUser.Meta):
+    class Meta(TypedModelMeta):
         abstract = False
         verbose_name = _("Пользователь")
         verbose_name_plural = _("Пользователи")

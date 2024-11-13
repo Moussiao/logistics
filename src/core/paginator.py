@@ -1,7 +1,7 @@
 from base64 import b64decode, b64encode
 from collections.abc import Generator
 from dataclasses import dataclass
-from typing import cast
+from typing import Any, cast
 from urllib import parse
 
 from django.core.paginator import InvalidPage
@@ -33,8 +33,8 @@ DEFAULT_CURSOR = Cursor(offset=0, reverse=False, position=None)
 
 
 @dataclass(frozen=True, slots=True)
-class CursorPage:
-    objects: tuple
+class CursorPage[T: Model | dict[str, Any]]:
+    objects: tuple[T, ...]
     next_cursor: str | None
     previous_cursor: str | None
 
@@ -53,7 +53,7 @@ def reverse_ordering(queryset_ordering: tuple[str, ...]) -> tuple[str, ...]:
     return tuple(invert(item) for item in queryset_ordering)
 
 
-class CursorPaginator:
+class CursorPaginator[T: Model]:
     """
     Пагинация курсором по queryset.
 
@@ -80,11 +80,15 @@ class CursorPaginator:
     MAX_CURSOR_OFFSET = 1000
 
     # Поля экземпляра
-    _queryset: QuerySet
+    _queryset: QuerySet[T, Any]
     _queryset_ordering: tuple[str, ...]
     _page_size: PositiveInt
 
-    def __init__(self, queryset: QuerySet, page_size: PositiveInt = DEFAULT_PAGE_SIZE) -> None:
+    def __init__(
+        self,
+        queryset: QuerySet[T, Any],
+        page_size: PositiveInt = DEFAULT_PAGE_SIZE,
+    ) -> None:
         if page_size < 1:
             raise TypeError(f"{self.__class__.__name__} is not supported {page_size=}")
 
@@ -101,7 +105,7 @@ class CursorPaginator:
         self._queryset_ordering = cast(tuple[str, ...], queryset.query.order_by)
         self._page_size = page_size
 
-    def __iter__(self) -> Generator[CursorPage, None, None]:
+    def __iter__(self) -> Generator[CursorPage[T], None, None]:
         first_page = self.get_page()
         yield first_page
 
@@ -111,7 +115,7 @@ class CursorPaginator:
             yield page
             next_cursor = page.next_cursor
 
-    def get_page(self, raw_cursor: str | None = None) -> CursorPage:
+    def get_page(self, raw_cursor: str | None = None) -> CursorPage[T]:
         cursor = DEFAULT_CURSOR if raw_cursor is None else self.decode_cursor(raw_cursor)
         if cursor.reverse:
             queryset = self._queryset.order_by(*reverse_ordering(self._queryset_ordering))
@@ -184,13 +188,13 @@ class CursorPaginator:
             offset = min(int(offset), self.MAX_CURSOR_OFFSET)
 
             reverse = tokens.get("r", ["0"])[0]
-            reverse = bool(int(reverse))
+            is_reverse = bool(int(reverse))
 
             position = tokens.get("p", [None])[0]
         except (KeyError, ValueError) as exc:
             raise InvalidRawCursorError(f"{raw_cursor=} failed to decode") from exc
 
-        return Cursor(offset=offset, reverse=reverse, position=position)
+        return Cursor(offset=offset, reverse=is_reverse, position=position)
 
     def encode_cursor(self, cursor: Cursor) -> str:
         tokens = {}
@@ -206,7 +210,7 @@ class CursorPaginator:
         encode = b64encode(querystring.encode())
         return encode.decode()
 
-    def _get_position_from_instance(self, instance: Model | dict) -> str:
+    def _get_position_from_instance(self, instance: Model | dict[str, Any]) -> str:
         field_name = self._queryset_ordering[0].lstrip("-")
         if isinstance(instance, dict):
             field_value = instance[field_name]
@@ -217,7 +221,7 @@ class CursorPaginator:
 
     def _get_next_cursor(
         self,
-        page_results: tuple,
+        page_results: tuple[T],
         cursor: Cursor,
         next_position: str,
         previous_position: str | None,
@@ -228,7 +232,7 @@ class CursorPaginator:
             compare_position = next_position
 
         offset = 0
-        position = next_position
+        position: str | None = next_position
         has_item_with_unique_position = False
         for item in reversed(page_results):
             position = self._get_position_from_instance(item)
@@ -255,7 +259,7 @@ class CursorPaginator:
 
     def _get_previous_cursor(
         self,
-        page_results: tuple,
+        page_results: tuple[T],
         cursor: Cursor,
         next_position: str | None,
         previous_position: str | None,
@@ -263,10 +267,10 @@ class CursorPaginator:
         if page_results and not cursor.reverse and cursor.offset:
             compare_position = self._get_position_from_instance(page_results[-1])
         else:
-            compare_position = next_position
+            compare_position = next_position  # type: ignore[assignment]
 
         offset = 0
-        position = previous_position
+        position: str | None = previous_position
         has_item_with_unique_position = False
         for item in page_results:
             position = self._get_position_from_instance(item)
@@ -288,5 +292,5 @@ class CursorPaginator:
                 offset = 0
                 position = next_position
 
-        cursor = Cursor(offset=offset, reverse=True, position=position)  # type: ignore[misc]
+        cursor = Cursor(offset=offset, reverse=True, position=position)
         return self.encode_cursor(cursor)

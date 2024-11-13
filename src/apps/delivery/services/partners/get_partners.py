@@ -18,12 +18,7 @@ class GetPartners:
     _filters: PartnersFilters
 
     def __call__(self) -> PartnersResponse:
-        partners_qs = (
-            Partner.objects.filter(is_active=True)
-            .values(*PartnerResponse.Meta.fields)
-            .order_by("name")
-        )
-
+        partners_qs = Partner.objects.filter(is_active=True).order_by("name")
         paginator = Paginator(partners_qs, per_page=self.COUNT_PER_PAGE)
         page = paginator.get_page(self._filters.page)
 

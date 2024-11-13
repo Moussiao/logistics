@@ -1,6 +1,7 @@
-from datetime import date
+from datetime import date, datetime
+from decimal import Decimal
 
-from ninja import Field, ModelSchema, Schema
+from ninja import Field, Schema
 
 from src.apps.delivery.api.schemas.customer import CustomerRequest, CustomerResponse
 from src.apps.delivery.api.schemas.customer_address import (
@@ -11,56 +12,46 @@ from src.apps.delivery.api.schemas.product import OrderProductResponse, ProductR
 from src.apps.delivery.models import Order
 
 
-class OrderRequest(ModelSchema):
+class OrderRequest(Schema):
     external_id: int = Field(ge=0)
+    external_verbose: str = Field(max_length=150)
     partner_id: int = Field(ge=0)
+    expected_delivery_date: date
+    comment: str = Field(max_length=255)
     customer: CustomerRequest
     customer_address: CustomerAddressRequest
     # Используем ограничения дабы максимальная сумма,
     # по всем заказам, не превышало валидное значение для Order.total_price
     products: list[ProductRequest] = Field(max_length=25)
 
-    class Meta:
-        model = Order
-        fields = ("external_verbose", "expected_delivery_date", "comment")
-
 
 class EditOrderRequest(Schema):
     comment: str | None = Field(None, max_length=255)
 
 
-class OrderResponse(ModelSchema):
-    class Meta:
-        model = Order
-        fields = (
-            "id",
-            "state",
-            "delivery_date",
-            "expected_delivery_date",
-            "total_price",
-        )
+class OrderResponse(Schema):
+    id: int = Field(ge=0)
+    state: Order.State
+    delivery_date: date | None
+    expected_delivery_date: date
+    total_price: Decimal
 
 
-class DetailOrderResponse(ModelSchema):
+class DetailOrderResponse(Schema):
+    id: int = Field(ge=0)
+    external_id: int = Field(ge=0)
+    external_verbose: str = Field(max_length=150)
+    state: Order.State
+    state_changed_at: datetime
+    delivery_date: date | None
+    expected_delivery_date: date
+    total_price: Decimal
+    created_at: datetime
+    updated_at: datetime
+    comment: str = Field(max_length=255)
     customer: CustomerResponse
     customer_address: CustomerAddressResponse
     products: list[OrderProductResponse]
-
-    class Meta:
-        model = Order
-        fields = (
-            "id",
-            "external_id",
-            "external_verbose",
-            "state",
-            "state_changed_at",
-            "delivery_date",
-            "expected_delivery_date",
-            "total_price",
-            "created_at",
-            "updated_at",
-            "comment",
-        )
 
 
 class CreateOrderResponse(Schema):

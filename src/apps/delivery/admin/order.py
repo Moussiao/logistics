@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from src.apps.delivery.models import Order, OrderProduct
 
 
-class OrderProductInline(admin.StackedInline):
+class OrderProductInline(admin.StackedInline[OrderProduct, Order]):
     extra = 1
     model = OrderProduct
     verbose_name = _("Заказ")

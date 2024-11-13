@@ -15,5 +15,5 @@ class TgSendMessage:
     _chat: "TgChat"
 
     async def __call__(self) -> None:
-        bot = TelegramBot(token=settings.BOT_TOKEN)
+        bot = TelegramBot(token=settings.BOT_TOKEN)  # type: ignore[misc]
         await bot.send_message(chat_id=self._chat.external_id * -1, text=self._text)

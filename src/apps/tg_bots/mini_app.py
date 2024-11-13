@@ -41,7 +41,7 @@ class InitDataValidator:
     _raw_init_data: str
     _parsed_init_data: dict[str, str] | None
 
-    def __init__(self, raw_init_data: str, bot_token: str = settings.BOT_TOKEN) -> None:
+    def __init__(self, raw_init_data: str, bot_token: str = settings.BOT_TOKEN) -> None:  # type: ignore[misc]
         self._bot_token = bot_token
         self._raw_init_data = raw_init_data
 

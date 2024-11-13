@@ -16,14 +16,24 @@ jobs:
       - name: build
         uses: ./.github/actions/build
 
+      - name: restore mypy cache
+        uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: mypy-cache-${{ github.ref_name }}
+          restore-keys: mypy-cache-master
+
       - name: check django migrations
-        run: poetry run python src/manage.py makemigrations --check --no-input --dry-run
+        run: poetry run python manage.py makemigrations --check --no-input --dry-run
 
       - name: check code formatting by black
         run: poetry run black . --check
 
       - name: lint code by ruff
         run: poetry run ruff check .
+
+      - name: check static types by mypy
+        run: poetry run mypy .
 
   test:
     needs: lint

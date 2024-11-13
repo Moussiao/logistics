@@ -34,4 +34,4 @@ class GetCountryByCode:
         if country is None or not isinstance(country, CountryInfo):
             raise InvalidCountryCodeError(f"{self._alpha_2_code} is invalid")
 
-        return country
+        return country  # type: ignore[no-any-return]

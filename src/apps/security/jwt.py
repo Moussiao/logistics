@@ -24,16 +24,20 @@ def create_access_token(
     if expires_delta is not None:
         expires = now + expires_delta
     else:
-        expires = now + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        expires = now + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)  # type: ignore[misc]
 
     payload = data.copy()
     payload["exp"] = expires
 
-    return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+    return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)  # type: ignore[misc]
 
 
 def decode_access_token(token: str) -> dict[str, Any]:
-    return jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
+    token_payload = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])  # type: ignore[misc]
+    if not isinstance(token_payload, dict):
+        return {}
+
+    return token_payload
 
 
 def create_user_access_token(user_id: int) -> str:

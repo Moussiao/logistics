@@ -1,5 +1,4 @@
 from logging import getLogger
-from typing import cast
 
 from django.contrib.auth.middleware import get_user
 from django.contrib.auth.models import AnonymousUser
@@ -21,7 +20,7 @@ class AccessTokenAuth(HttpBearer):
             return None
 
         if not request.user.is_authenticated:
-            request.user = SimpleLazyObject(  # type: ignore[misc]
+            request.user = SimpleLazyObject(  # type: ignore[assignment]
                 lambda: self.get_user(request=request, token_payload=token_payload)
             )
 
@@ -45,8 +44,4 @@ class AccessTokenAuth(HttpBearer):
         token_payload: UserAccessTokenPayload,
     ) -> User | AnonymousUser:
         user = User.objects.filter(pk=token_payload.user_id, is_active=True).first()
-        if user is None:
-            user = get_user(request)
-            user = cast(User | AnonymousUser, user)
-
-        return user
+        return user or get_user(request)

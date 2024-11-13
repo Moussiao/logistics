@@ -1,4 +1,4 @@
-from typing import Any, Protocol, final
+from typing import Any, Protocol
 
 import pytest
 from django_fakery.faker_factory import Factory
@@ -6,12 +6,10 @@ from django_fakery.faker_factory import Factory
 from src.apps.geo.models import Country, TimeZone
 
 
-@final
 class CountryFactory(Protocol):
     def __call__(self, **fields: Any) -> Country: ...
 
 
-@final
 class TimeZoneFactory(Protocol):
     def __call__(self, **fields: Any) -> TimeZone: ...
 
@@ -19,7 +17,7 @@ class TimeZoneFactory(Protocol):
 @pytest.fixture
 def country_factory(fakery: Factory[Country]) -> CountryFactory:
     def factory(**fields: Any) -> Country:
-        return fakery.make(model=Country, fields=fields)  # type: ignore[call-overload]
+        return fakery.make(model=Country, fields=fields)  # type: ignore[call-overload, no-any-return]
 
     return factory
 
@@ -27,7 +25,7 @@ def country_factory(fakery: Factory[Country]) -> CountryFactory:
 @pytest.fixture
 def time_zone_factory(fakery: Factory[TimeZone]) -> TimeZoneFactory:
     def factory(**fields: Any) -> TimeZone:
-        return fakery.make(model=TimeZone, fields=fields)  # type: ignore[call-overload]
+        return fakery.make(model=TimeZone, fields=fields)  # type: ignore[call-overload, no-any-return]
 
     return factory
 

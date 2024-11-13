@@ -2,11 +2,7 @@ from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
 
 import pytest
-from freezegun.api import (
-    FrozenDateTimeFactory,
-    StepTickTimeFactory,
-    TickingDateTimeFactory,
-)
+from freezegun.api import FrozenDateTimeFactory, StepTickTimeFactory
 from jwt import ExpiredSignatureError
 
 from src.apps.security.jwt import (
@@ -23,7 +19,7 @@ if TYPE_CHECKING:
     from src.apps.users.models import User
 
 
-type Freezer = FrozenDateTimeFactory | StepTickTimeFactory | TickingDateTimeFactory
+type Freezer = FrozenDateTimeFactory | StepTickTimeFactory
 
 
 @pytest.mark.freeze_time("2022-07-01 14:00")
@@ -44,7 +40,7 @@ def test_create_access_token() -> None:
 @pytest.mark.django_db
 @pytest.mark.freeze_time("2022-07-01 14:00")
 def test_create_user_access_token(user: "User", settings: "LazySettings") -> None:
-    expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)  # type: ignore[misc]
 
     token = create_user_access_token(user.pk)
 

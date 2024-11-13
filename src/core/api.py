@@ -1,12 +1,13 @@
 from django.conf import settings
 from ninja import NinjaAPI, Redoc
+from ninja.security.base import AuthBase
 
 from src.apps.delivery.api import router as delivery_router
 from src.apps.security.api import router as security_router
 from src.apps.security.auth import AccessTokenAuth
 from src.apps.users.api import router as users_router
 
-api_auth = (AccessTokenAuth(),)
+api_auth: tuple[AuthBase, ...] = (AccessTokenAuth(),)
 if settings.DEBUG:
     from ninja.security import django_auth
 

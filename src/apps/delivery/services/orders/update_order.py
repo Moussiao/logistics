@@ -1,6 +1,7 @@
 from typing import final
 
 import attr
+from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
 
 from src.apps.delivery.api.schemas import EditOrderRequest
@@ -12,7 +13,7 @@ from src.apps.users.models import User
 @final
 @attr.dataclass(slots=True, frozen=True)
 class UpdateOrder:
-    _user: User
+    _user: User | AnonymousUser
     _order_id: int
     _payload: EditOrderRequest
 

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import final
 
+from django.contrib.auth.models import AnonymousUser
+
 from src.apps.delivery.models import Order
 from src.apps.delivery.services.orders.exceptions import OrderNotFoundError
 from src.apps.delivery.services.orders.state_machine import OrderFSM
@@ -8,10 +10,10 @@ from src.apps.users.models import User
 
 
 class BaseAction(ABC):
-    _user: User
+    _user: User | AnonymousUser
     _order_id: int
 
-    def __init__(self, user: User, order_id: int) -> None:
+    def __init__(self, user: User | AnonymousUser, order_id: int) -> None:
         self._user = user
         self._order_id = order_id
 

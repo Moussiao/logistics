@@ -1,4 +1,4 @@
-from typing import Any, Protocol, final
+from typing import Any, Protocol
 
 import pytest
 from django_fakery.faker_factory import Factory
@@ -6,12 +6,10 @@ from django_fakery.faker_factory import Factory
 from src.apps.users.models import User
 
 
-@final
 class UserFactory(Protocol):
     def __call__(self, **fields: Any) -> User: ...
 
 
-@final
 class UsersFactory(Protocol):
     def __call__(self, objs_quantity: int, **fields: Any) -> list[User]: ...
 
@@ -21,7 +19,7 @@ def user_factory(fakery: Factory[User]) -> UserFactory:
     def factory(**fields: Any) -> User:
         fields.setdefault("is_active", True)
         fields.setdefault("is_superuser", False)
-        return fakery.make(model=User, fields=fields)  # type: ignore[call-overload]
+        return fakery.make(model=User, fields=fields)  # type: ignore[call-overload, no-any-return]
 
     return factory
 
@@ -31,7 +29,7 @@ def users_factory(fakery: Factory[User]) -> UsersFactory:
     def factory(objs_quantity: int, **fields: Any) -> list[User]:
         fields.setdefault("is_active", True)
         fields.setdefault("is_superuser", False)
-        return fakery.make(model=User, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload]
+        return fakery.make(model=User, fields=fields, quantity=objs_quantity)  # type: ignore[call-overload, no-any-return]
 
     return factory
 

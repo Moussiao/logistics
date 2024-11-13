@@ -1,12 +1,9 @@
-from ninja import Field, ModelSchema, Schema
-
-from src.apps.delivery.models import Partner
+from ninja import Field, Schema
 
 
-class PartnerResponse(ModelSchema):
-    class Meta:
-        model = Partner
-        fields = ("id", "name")
+class PartnerResponse(Schema):
+    id: int = Field(ge=0)
+    name: str = Field(max_length=150)
 
 
 class PartnersResponse(Schema):

@@ -36,13 +36,13 @@ class CustomerRequestFactory(ModelFactory[CustomerRequest]):
 
     @classmethod
     def email(cls) -> str:
-        return cls.__faker__.email()
+        return cls.__faker__.email()  # type: ignore[no-any-return]
 
 
 class CustomerAddressRequestFactory(ModelFactory[CustomerAddressRequest]):
     @classmethod
     def country_code(cls) -> str:
-        return cls.__faker__.country_code()
+        return cls.__faker__.country_code()  # type: ignore[no-any-return]
 
 
 class OrderRequestFactory(ModelFactory[OrderRequest]):

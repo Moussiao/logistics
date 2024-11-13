@@ -1,21 +1,19 @@
+from typing import Annotated
+
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from ninja import ModelSchema
-from pydantic import constr, field_validator
+from ninja import Field, Schema
+from pydantic import StringConstraints, field_validator
 
 from src.apps.delivery.models import Customer
 from src.core.validators import validate_phone
 
 
-class CustomerRequest(ModelSchema):
-    phone: str
-    email: constr(to_lower=True) = ""
-    # Необходимо, так как ModelSchema не подтягивает choices
+class CustomerRequest(Schema):
+    name: str = Field(max_length=200)
+    phone: str = Field(max_length=32)
+    email: Annotated[str, StringConstraints(to_lower=True)] = Field(max_length=254, default="")
     gender: Customer.Gender = Customer.Gender.UNKNOWN
-
-    class Meta:
-        model = Customer
-        fields = ("name",)
 
     @field_validator("phone")
     @classmethod
@@ -41,7 +39,9 @@ class CustomerRequest(ModelSchema):
         return value
 
 
-class CustomerResponse(ModelSchema):
-    class Meta:
-        model = Customer
-        fields = ("id", "name", "email", "phone", "gender")
+class CustomerResponse(Schema):
+    id: int = Field(ge=0)
+    gender: Customer.Gender
+    name: str = Field(max_length=200)
+    email: str = Field(max_length=254)
+    phone: str = Field(max_length=32)

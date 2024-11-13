@@ -10,7 +10,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    import debug_toolbar
+    import debug_toolbar  # type: ignore[import-untyped]
 
     urlpatterns += [
         # URLs specific only to django-debug-toolbar:
