@@ -6,6 +6,7 @@ INSTALLED_APPS: list[str] = [
     "axes",
     "daphne",
     "django_celery_results",
+    "simple_history",
 
     # Default django apps
     "django.contrib.admin",

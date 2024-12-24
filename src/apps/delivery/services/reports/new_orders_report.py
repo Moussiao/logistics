@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from datetime import timedelta
 from typing import final
 
+from django.conf import settings
 from django.db.models import QuerySet
 
 from src.apps.delivery.models import Order
@@ -34,6 +35,7 @@ class BaseNewOrdersReport(OrdersReport):
             f"ID: {order.external_id}\n"
             f"Телефон: {order.customer.phone}\n"
             f"Стоимость товаров: {total_price}\n"
+            f"{settings.TG_ORDERS_URL}?startapp={order.pk}\n"  # type: ignore[misc]
         )
 
 

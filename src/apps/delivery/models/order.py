@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from django_stubs_ext.db.models import TypedModelMeta
+from simple_history.models import HistoricalRecords  # type: ignore[import-untyped]
 
 from src.core.models import TimedMixin
 
@@ -45,6 +46,18 @@ class Order(TimedMixin, models.Model):
         verbose_name=_("Адрес заказчика"),
         on_delete=models.PROTECT,
         related_name="orders",
+    )
+
+    history = HistoricalRecords(
+        excluded_fields=[
+            "external_id",
+            "partner",
+            "customer",
+            "customer_address",
+            "created_at",
+            "updated_at",
+        ],
+        cascade_delete_history=True,
     )
 
     class Meta(TypedModelMeta):
