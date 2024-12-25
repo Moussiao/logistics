@@ -1,0 +1,1 @@
+import{_ as t}from"./VHeading.vue_vue_type_script_setup_true_lang-DtcVS96H.js";import{d as o,c as a,w as s,o as r,g as n}from"./index-DPe8PrNa.js";const f=o({__name:"VNotAccessedView",setup(_){return(c,e)=>(r(),a(t,{tag:"h1"},{default:s(()=>e[0]||(e[0]=[n("Нет доступа")])),_:1}))}});export{f as default};

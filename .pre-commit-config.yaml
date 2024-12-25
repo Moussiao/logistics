@@ -13,3 +13,4 @@ repos:
     rev: v1.27.3
     hooks:
       - id: typos
+        exclude: dist

@@ -1,0 +1,1 @@
+import{d as e,c as t,w as s,G as o,a as l,o as n,r}from"./index-DPe8PrNa.js";const i=e({__name:"VHeading",props:{tag:{default:"h2"}},setup(p){return(a,d)=>(n(),t(l(a.tag),{class:o(["font-display font-bold",{"text-4xl":a.tag==="h1","text-2xl":a.tag==="h2","text-xl":a.tag==="h3"}])},{default:s(()=>[r(a.$slots,"default")]),_:3},8,["class"]))}});export{i as _};
