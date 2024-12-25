@@ -53,7 +53,7 @@ services:
       - redisnet
       - mariadbnet
     env_file:
-      - ./src/core/.env
+      - backend/core/.env
     environment:
       DJANGO_DATABASE_HOST: db
 
@@ -70,7 +70,7 @@ services:
       - redisnet
       - mariadbnet
     env_file:
-      - ./src/core/.env
+      - backend/core/.env
     environment:
       DJANGO_DATABASE_HOST: db
 
@@ -78,7 +78,7 @@ services:
     build:
       target: "development_build"
       context: .
-    command: celery -A src.core.celery worker --beat -l INFO
+    command: celery -A backend.core.celery worker --beat -l INFO
 
     depends_on:
       - db
@@ -87,7 +87,7 @@ services:
       - redisnet
       - mariadbnet
     env_file:
-      - ./src/core/.env
+      - backend/core/.env
     environment:
       DJANGO_DATABASE_HOST: db
 

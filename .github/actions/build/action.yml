@@ -34,5 +34,5 @@ runs:
       shell: bash
 
     - name: restore default environment
-      run: cp src/core/.env.example src/core/.env
+      run: cp backend/core/.env.example backend/core/.env
       shell: bash

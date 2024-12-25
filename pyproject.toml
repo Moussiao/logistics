@@ -3,7 +3,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "logistic_backend"
+name = "logistics"
 description = ""
 package-mode = false
 
@@ -59,15 +59,15 @@ ruff = "^0.7.4"
 mypy = "^1.13.0"
 
 [tool.django-stubs]
-django_settings_module = "src.core.settings"
+django_settings_module = "backend.core.settings"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "src.core.settings"
+DJANGO_SETTINGS_MODULE = "backend.core.settings"
 addopts = "--cov=. --cov-report=term-missing:skip-covered --cov-report=html --cov-fail-under=0"
 filterwarnings = [
     "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning:pytest_freezegun:17",
     "ignore:Converter 'uuid' is already registered.:django.utils.deprecation.RemovedInDjango60Warning:ninja.signature.utils:96",
-    "ignore:Support for class-based `config` is deprecated, use ConfigDict instead.:DeprecationWarning:pydantic._internal._config:291",
+    "ignore:Support for class-based `config` is deprecated, use ConfigDict instead.:DeprecationWarning:pydantic._internal._config:295",
 ]
 python_files = "test*.py"
 # Timeout for tests, so they can not take longer than this amount of seconds.
