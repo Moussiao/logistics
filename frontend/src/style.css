@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color-base: from var(--tg-theme-secondary-bg-color, #131415) r g b;
+  --bg-color: rgb(var(--bg-color-base));
+  --bg-color-80: rgb(var(--bg-color-base) / 80%);
+  --bg-color-64: rgb(var(--bg-color-base) / 64%);
+  --bg-color-48: rgb(var(--bg-color-base) / 48%);
+  --bg-color-32: rgb(var(--bg-color-base) / 32%);
+  --bg-color-24: rgb(var(--bg-color-base) / 24%);
+
+  --section-bg-color: var(--tg-theme-section-bg-color, #18222d);
+  --section-separator-color: var(--tg-theme-section-separator-color, #e0e0e0);
+  --accent-bg-color: var(--tg-theme-accent-text-color, #2ea6ff);
+
+  --text-color: var(--tg-theme-text-color, #ffffff);
+  --link-color: var(--tg-theme-link-color, #62bcf9);
+  --hint-color: var(--tg-theme-hint-color, #b1c3d5);
+  --accent-text-color: var(--tg-theme-accent-text-color, #2ea6ff);
+  --subtitle-text-color: var(--tg-theme-subtitle-text-color, #b1c3d5);
+  --destructive-text-color: var(--tg-theme-destructive-text-color, #ef5b5b);
+
+  --button-color: var(--tg-theme-button-color, #2ea6ff);
+  --button-text-color: var(--tg-theme-button-text-color, #ffffff);
+
+  --errorColor: var(--destructive-text-color);
+
+  --newOrderColor: #a4abb6;
+  --processingOrderColor: #ffb302;
+  --deliveryOrderColor: #2dccff;
+  --paidOrderColor: #56f000;
+  --canceledOrderColor: #ff3838;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--section-bg-color) var(--bg-color);
+  }
+
+  body {
+    @apply font-body;
+    background: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .link {
+    @apply opacity-100 transition-colors;
+    color: var(--link-color, blue);
+  }
+
+  .content {
+    @apply max-w-[768px] mx-auto;
+    height: 100dvh;
+    overflow-y: hidden;
+  }
+
+  .icon-tabler.icon-tabler-package-import {
+    color: var(--newOrderColor);
+  }
+  .icon-tabler.icon-tabler-package-export {
+    color: var(--processingOrderColor);
+  }
+  .icon-tabler.icon-tabler-truck-delivery {
+    color: var(--deliveryOrderColor);
+  }
+  .icon-tabler.icon-tabler-circle-check {
+    color: var(--paidOrderColor);
+  }
+  .icon-tabler.icon-tabler-package-off {
+    color: var(--canceledOrderColor);
+  }
+}

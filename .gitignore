@@ -55,13 +55,11 @@ __pycache__/
 .Python
 env/
 develop-eggs/
-dist/
 downloads/
 eggs/
 lib/
 lib64/
 parts/
-sdist/
 var/
 *.egg-info/
 .installed.cfg
@@ -89,9 +87,6 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-
 #####=== Sass ===#####
 
 .sass-cache
@@ -102,8 +97,6 @@ coverage.xml
 node_modules/
 bower_components/
 *.log
-
-dist/
 
 #####=== Vagrant ===#####
 .vagrant/
@@ -144,6 +137,10 @@ npm-debug.log
 #### jetbrains ####
 # Restrict `.idea/` folder at all:
 .idea/
+
+#### VSCode ####
+.vscode/*
+!.vscode/extensions.json
 
 # CMake
 cmake-build-debug/

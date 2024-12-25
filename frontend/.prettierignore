@@ -1,0 +1,11 @@
+pnpm-lock.yaml
+dist/
+*.ejs.t
+.npmrc
+*.png
+*.svg
+*.jpg
+*.ico
+*.woff
+*.woff2
+.*
