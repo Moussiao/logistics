@@ -164,6 +164,7 @@ atlassian-ide-plugin.xml
 media/
 .static/
 /static/
+www
 
 # File types:
 *.sqlite3
