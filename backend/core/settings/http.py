@@ -2,6 +2,10 @@ from backend.core.settings.environ import env
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", cast=str)
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", cast=str)
+
 
 if env("DEBUG", cast=bool):
     import socket

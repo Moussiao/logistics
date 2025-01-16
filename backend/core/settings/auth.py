@@ -28,6 +28,10 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+]
+
 # JWT
 JWT_ALGORITHM = "HS256"
 JWT_SECRET = env("JWT_SECRET", cast=str)
