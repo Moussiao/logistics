@@ -25,6 +25,7 @@ _settings_modules_paths: tuple[str, ...] = (
     "installed_apps.py",
     "media.py",
     "middleware.py",
+    "sentry.py",
     "static.py",
     "telegram.py",
     # Переопределение дефолтных настроек

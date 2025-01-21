@@ -44,3 +44,6 @@ TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 
 USE_TZ = True
+
+# Disable built-in ./manage.py test command in favor of pytest
+TEST_RUNNER = "backend.core.tests.disable_test_command_runner.DisableTestCommandRunner"
